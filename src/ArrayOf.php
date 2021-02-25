@@ -34,7 +34,14 @@ abstract class ArrayOf extends ArrayObject
             throw InvalidEnforcementType::forType($this->typeToEnforce());
         }
 
-        parent::__construct($this->filteredInput($input));
+        array_map(function ($item): void {
+            // Enforce type of array items
+            if (!$this->checkType($item)) {
+                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
+            }
+        }, $input);
+
+        parent::__construct($input);
     }
 
     private function checkEnforcementType(): bool
@@ -55,21 +62,6 @@ abstract class ArrayOf extends ArrayObject
     private function checkForScalar(): bool
     {
         return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
-    }
-
-    private function filteredInput(array $input = []): array
-    {
-        $filteredInput = [];
-        foreach ($input as $key => $item) {
-            // Enforce type of array items
-            if (!$this->checkType($item)) {
-                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
-            }
-
-            $filteredInput[$key] = $item;
-        }
-
-        return $filteredInput;
     }
 
     /**
