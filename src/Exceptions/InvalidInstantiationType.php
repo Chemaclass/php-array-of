@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace ArrayOf\Exceptions;
 
-final class InvalidInstantiationType extends \InvalidArgumentException
+use InvalidArgumentException;
+
+final class InvalidInstantiationType extends InvalidArgumentException
 {
-    public function __construct(string $className, string $actualType, string $expectedType)
+    public static function forType(string $className, string $actualType, string $expectedType): self
     {
-        parent::__construct(sprintf(
+        return new self(sprintf(
             'Tried to instantiate a %s with a %s. Only accepts objects of type %s.',
             $className,
             $actualType,

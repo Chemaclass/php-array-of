@@ -10,6 +10,6 @@ final class ValidClassArrayOf extends ArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return SimpleTestObject::class;
+        return SimpleObject::class;
     }
 }

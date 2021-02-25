@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace ArrayOf\Exceptions;
 
-final class InvalidEnforcementType extends \Exception
+use InvalidArgumentException;
+
+final class InvalidEnforcementType extends InvalidArgumentException
 {
-    public function __construct(string $type)
+    public static function forType(string $type): self
     {
-        parent::__construct(sprintf(
-            'ArrayOf objects can only enforce scalars and objects. Tried to enforce: %s',
-            $type
-        ));
+        return new self("ArrayOf objects can only enforce scalars and objects. Tried to enforce: $type");
     }
 }

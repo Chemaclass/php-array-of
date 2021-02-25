@@ -4,39 +4,47 @@ declare(strict_types=1);
 
 namespace ArrayOf;
 
+use ArrayObject;
 use ArrayOf\Exceptions\InvalidEnforcementType;
 use ArrayOf\Exceptions\InvalidInstantiationType;
 
-abstract class ArrayOf extends \ArrayObject
+abstract class ArrayOf extends ArrayObject
 {
+    private const POSSIBLE_SCALARS = ['boolean', 'integer', 'double', 'string'];
+
     abstract protected function typeToEnforce(): string;
 
     /**
+     * @throws InvalidEnforcementType
      * @throws InvalidInstantiationType
      */
     public function __construct(array $input = [], ?callable $filter = null)
     {
-        //Check that the type to enforce is valid
         if (!$this->checkEnforcementType()) {
-            throw new InvalidEnforcementType($this->typeToEnforce());
+            throw InvalidEnforcementType::forType($this->typeToEnforce());
         }
 
+        parent::__construct($this->filteredInput($input, $filter));
+    }
+
+    private function filteredInput(array $input = [], ?callable $filter = null): array
+    {
         $filteredInput = [];
         foreach ($input as $key => $item) {
-            //Enforce type of array items.
+            // Enforce type of array items
             if (!$this->checkType($item)) {
-                throw new InvalidInstantiationType(static::class, self::getType($item), $this->typeToEnforce());
+                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
             }
 
-            //Allow input to be filtered by callback
-            if ($filter !== null && $filter($item) == false) {
+            // Allow input to be filtered by callback
+            if ($filter !== null && $filter($item) === false) {
                 continue;
             }
 
             $filteredInput[$key] = $item;
         }
 
-        parent::__construct($filteredInput);
+        return $filteredInput;
     }
 
     /**
@@ -45,22 +53,20 @@ abstract class ArrayOf extends \ArrayObject
     private function checkType($variable): bool
     {
         if (is_object($variable)) {
-            return get_class($variable) == $this->typeToEnforce() || is_subclass_of($variable, $this->typeToEnforce());
+            return get_class($variable) === $this->typeToEnforce()
+                || is_subclass_of($variable, $this->typeToEnforce());
         }
 
-        return (self::getType($variable) == $this->typeToEnforce());
+        return static::getType($variable) === $this->typeToEnforce();
     }
 
     private function checkEnforcementType(): bool
     {
-        //Check for valid class
-        if (class_exists($this->typeToEnforce()) || interface_exists($this->typeToEnforce())) {
+        if ($this->checkForValidClass()) {
             return true;
         }
 
-        //Check for scalar
-        $scalars = ['boolean', 'integer', 'double', 'string'];
-        return in_array($this->typeToEnforce(), $scalars);
+        return $this->checkForScalar();
     }
 
     /**
@@ -68,10 +74,19 @@ abstract class ArrayOf extends \ArrayObject
      */
     private static function getType($variable): string
     {
-        if (is_object($variable)) {
-            return get_class($variable);
-        }
+        return is_object($variable)
+            ? get_class($variable)
+            : gettype($variable);
+    }
 
-        return gettype($variable);
+    private function checkForValidClass(): bool
+    {
+        return class_exists($this->typeToEnforce())
+            || interface_exists($this->typeToEnforce());
+    }
+
+    private function checkForScalar(): bool
+    {
+        return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
     }
 }

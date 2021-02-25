@@ -9,7 +9,7 @@ use ArrayOf\Exceptions\InvalidEnforcementType;
 use ArrayOf\Exceptions\InvalidInstantiationType;
 use ArrayOfTest\Unit\Fixtures\InvalidClassArrayOf;
 use ArrayOfTest\Unit\Fixtures\InvalidScalarArrayOf;
-use ArrayOfTest\Unit\Fixtures\SimpleTestObject;
+use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use ArrayOfTest\Unit\Fixtures\ValidClassArrayOf;
 use ArrayOfTest\Unit\Fixtures\ValidScalarArrayOf;
 use PHPUnit\Framework\TestCase;
@@ -56,7 +56,7 @@ final class ArrayOfTest extends TestCase
         $scalars = new ValidScalarArrayOf(['test', 'test-again']);
         self::assertInstanceOf(ArrayOf::class, $scalars);
 
-        $classes = new ValidClassArrayOf([new SimpleTestObject(), new SimpleTestObject()]);
+        $classes = new ValidClassArrayOf([new SimpleObject(), new SimpleObject()]);
         self::assertInstanceOf(ArrayOf::class, $classes);
     }
 
@@ -90,16 +90,16 @@ final class ArrayOfTest extends TestCase
 
     public function testFiltersInputBasedOnCallback(): void
     {
-        $filterCallback = fn (SimpleTestObject $item) => ($item->getValue() === 'yes');
+        $filterCallback = fn (SimpleObject $item) => ($item->getValue() === 'yes');
 
         $test = new ValidClassArrayOf([
-            new SimpleTestObject('yes'),
-            new SimpleTestObject('no'),
-            new SimpleTestObject('yes'),
-            new SimpleTestObject('yes'),
-            new SimpleTestObject('no'),
-            new SimpleTestObject('yes'),
-            new SimpleTestObject('yes'),
+            new SimpleObject('yes'),
+            new SimpleObject('no'),
+            new SimpleObject('yes'),
+            new SimpleObject('yes'),
+            new SimpleObject('no'),
+            new SimpleObject('yes'),
+            new SimpleObject('yes'),
         ], $filterCallback);
 
         self::assertEquals(5, count($test));

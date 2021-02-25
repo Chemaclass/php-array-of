@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ArrayOfTest\Unit\Fixtures;
 
-final class SimpleTestObject
+final class SimpleObject
 {
-    private $value;
+    private ?string $value;
 
     public function __construct(?string $value = null)
     {
