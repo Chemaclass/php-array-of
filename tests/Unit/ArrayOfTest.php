@@ -13,6 +13,7 @@ use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use ArrayOfTest\Unit\Fixtures\ValidClassArrayOf;
 use ArrayOfTest\Unit\Fixtures\ValidScalarArrayOf;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 final class ArrayOfTest extends TestCase
 {
@@ -69,7 +70,7 @@ final class ArrayOfTest extends TestCase
     public function testInvalidClassInputType(): void
     {
         $this->expectException(InvalidInstantiationType::class);
-        new ValidClassArrayOf([new \stdClass()]);
+        new ValidClassArrayOf([new stdClass()]);
     }
 
     public function testCanUseAsArray(): void
