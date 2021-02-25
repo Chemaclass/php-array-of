@@ -28,33 +28,40 @@ abstract class ArrayOf extends ArrayObject
      * @throws InvalidEnforcementType
      * @throws InvalidInstantiationType
      */
-    public function __construct(array $input = [], ?callable $filter = null)
+    public function __construct(array $input = [])
     {
         if (!$this->checkEnforcementType()) {
             throw InvalidEnforcementType::forType($this->typeToEnforce());
         }
 
-        parent::__construct($this->filteredInput($input, $filter));
-    }
-
-    private function filteredInput(array $input = [], ?callable $filter = null): array
-    {
-        $filteredInput = [];
-        foreach ($input as $key => $item) {
+        array_map(function ($item): void {
             // Enforce type of array items
             if (!$this->checkType($item)) {
                 throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
             }
+        }, $input);
 
-            // Allow input to be filtered by callback
-            if ($filter !== null && $filter($item) === false) {
-                continue;
-            }
+        parent::__construct($input);
+    }
 
-            $filteredInput[$key] = $item;
+    private function checkEnforcementType(): bool
+    {
+        if ($this->checkForValidClass()) {
+            return true;
         }
 
-        return $filteredInput;
+        return $this->checkForScalar();
+    }
+
+    private function checkForValidClass(): bool
+    {
+        return class_exists($this->typeToEnforce())
+            || interface_exists($this->typeToEnforce());
+    }
+
+    private function checkForScalar(): bool
+    {
+        return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
     }
 
     /**
@@ -70,15 +77,6 @@ abstract class ArrayOf extends ArrayObject
         return static::getType($variable) === $this->typeToEnforce();
     }
 
-    private function checkEnforcementType(): bool
-    {
-        if ($this->checkForValidClass()) {
-            return true;
-        }
-
-        return $this->checkForScalar();
-    }
-
     /**
      * @param mixed $variable
      */
@@ -87,16 +85,5 @@ abstract class ArrayOf extends ArrayObject
         return is_object($variable)
             ? get_class($variable)
             : gettype($variable);
-    }
-
-    private function checkForValidClass(): bool
-    {
-        return class_exists($this->typeToEnforce())
-            || interface_exists($this->typeToEnforce());
-    }
-
-    private function checkForScalar(): bool
-    {
-        return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
     }
 }

@@ -82,27 +82,6 @@ final class ArrayOfTest extends TestCase
         self::assertTrue(isset($test[0]));
         self::assertFalse(isset($test[100]));
 
-        $i = 0;
-        foreach ($test as $item) {
-            $i++;
-        }
-        self::assertEquals(2, $i);
-    }
-
-    public function testFiltersInputBasedOnCallback(): void
-    {
-        $filterCallback = fn (SimpleObject $item) => ($item->getValue() === 'yes');
-
-        $test = new ValidClassArrayOf([
-            new SimpleObject('yes'),
-            new SimpleObject('no'),
-            new SimpleObject('yes'),
-            new SimpleObject('yes'),
-            new SimpleObject('no'),
-            new SimpleObject('yes'),
-            new SimpleObject('yes'),
-        ], $filterCallback);
-
-        self::assertEquals(5, count($test));
+        self::assertCount(2, $test);
     }
 }
