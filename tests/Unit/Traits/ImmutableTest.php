@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit;
+namespace ArrayOfTest\Unit\Traits;
 
 use ArrayOf\Exceptions\ImmutabilityException;
 use ArrayOfTest\Unit\Fixtures\ValidScalarImmutableArrayOf;
 use PHPUnit\Framework\TestCase;
 
-final class ImmutableArrayOfTest extends TestCase
+final class ImmutableTest extends TestCase
 {
     public function testImmutabilityOfSet(): void
     {
         $test = new ValidScalarImmutableArrayOf(['test']);
         $this->expectException(ImmutabilityException::class);
+        $this->expectExceptionMessage('ArrayOfTest\Unit\Fixtures\ValidScalarImmutableArrayOf objects are immutable.');
         $test[] = 'invalid';
     }
 
@@ -21,6 +22,7 @@ final class ImmutableArrayOfTest extends TestCase
     {
         $test = new ValidScalarImmutableArrayOf(['test']);
         $this->expectException(ImmutabilityException::class);
+        $this->expectExceptionMessage('ArrayOfTest\Unit\Fixtures\ValidScalarImmutableArrayOf objects are immutable.');
         unset($test[0]);
     }
 }

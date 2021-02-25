@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace ArrayOfTest\Unit\Scalars\Immutable;
 
-use ArrayOf\ImmutableArrayOf;
 use ArrayOf\Scalars\Immutable\ImmutableArrayOfInteger;
+use ArrayOf\Traits\Immutable;
 use PHPUnit\Framework\TestCase;
 
 final class ImmutableArrayOfIntegerTest extends TestCase
@@ -14,6 +14,6 @@ final class ImmutableArrayOfIntegerTest extends TestCase
     {
         $test = new ImmutableArrayOfInteger([1]);
         self::assertInstanceOf(ImmutableArrayOfInteger::class, $test);
-        self::assertInstanceOf(ImmutableArrayOf::class, $test);
+        self::assertContains(Immutable::class, class_uses($test));
     }
 }

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf;
+namespace ArrayOf\Traits;
 
 use ArrayOf\Exceptions\ImmutabilityException;
 
-abstract class ImmutableArrayOf extends ArrayOf
+trait Immutable
 {
     /**
      * @param mixed $offset
@@ -16,7 +16,7 @@ abstract class ImmutableArrayOf extends ArrayOf
      */
     public function offsetSet($offset, $value): void
     {
-        throw new ImmutabilityException();
+        throw new ImmutabilityException(self::class);
     }
 
     /**
@@ -26,6 +26,6 @@ abstract class ImmutableArrayOf extends ArrayOf
      */
     public function offsetUnset($offset): void
     {
-        throw new ImmutabilityException();
+        throw new ImmutabilityException(self::class);
     }
 }
