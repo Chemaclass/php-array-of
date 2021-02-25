@@ -10,6 +10,6 @@ final class ImmutabilityException extends Exception
 {
     public function __construct(string $className)
     {
-        parent::__construct("${className} objects are immutable.");
+        parent::__construct("{$className} objects are immutable.");
     }
 }
