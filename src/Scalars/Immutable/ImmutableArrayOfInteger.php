@@ -10,6 +10,6 @@ final class ImmutableArrayOfInteger extends ImmutableArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'integer';
+        return self::SCALAR_INTEGER;
     }
 }

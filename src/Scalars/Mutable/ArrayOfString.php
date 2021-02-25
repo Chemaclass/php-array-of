@@ -10,6 +10,6 @@ final class ArrayOfString extends ArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'string';
+        return self::SCALAR_STRING;
     }
 }

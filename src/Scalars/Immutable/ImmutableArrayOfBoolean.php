@@ -10,6 +10,6 @@ final class ImmutableArrayOfBoolean extends ImmutableArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'boolean';
+        return self::SCALAR_BOOLEAN;
     }
 }

@@ -10,6 +10,6 @@ final class ArrayOfBoolean extends ArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'boolean';
+        return self::SCALAR_BOOLEAN;
     }
 }

@@ -10,7 +10,17 @@ use ArrayOf\Exceptions\InvalidInstantiationType;
 
 abstract class ArrayOf extends ArrayObject
 {
-    private const POSSIBLE_SCALARS = ['boolean', 'integer', 'double', 'string'];
+    protected const SCALAR_BOOLEAN = 'boolean';
+    protected const SCALAR_INTEGER = 'integer';
+    protected const SCALAR_DOUBLE = 'double';
+    protected const SCALAR_STRING = 'string';
+
+    private const POSSIBLE_SCALARS = [
+        self::SCALAR_BOOLEAN,
+        self::SCALAR_INTEGER,
+        self::SCALAR_DOUBLE,
+        self::SCALAR_STRING,
+    ];
 
     abstract protected function typeToEnforce(): string;
 

@@ -10,6 +10,6 @@ final class ArrayOfInteger extends ArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'integer';
+        return self::SCALAR_INTEGER;
     }
 }

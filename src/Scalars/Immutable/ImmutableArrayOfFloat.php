@@ -10,6 +10,6 @@ final class ImmutableArrayOfFloat extends ImmutableArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'double';
+        return self::SCALAR_DOUBLE;
     }
 }

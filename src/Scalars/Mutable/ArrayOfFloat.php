@@ -10,6 +10,6 @@ final class ArrayOfFloat extends ArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return 'double';
+        return self::SCALAR_DOUBLE;
     }
 }
