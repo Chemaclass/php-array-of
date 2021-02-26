@@ -14,7 +14,7 @@ final class ImmutableTest extends TestCase
     {
         $test = new ValidScalarImmutableArrayOf(['test']);
         $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('ArrayOfTest\Unit\Fixtures\ValidScalarImmutableArrayOf objects are immutable.');
+        $this->expectExceptionMessage('ValidScalarImmutableArrayOf objects are immutable.');
         $test[] = 'invalid';
     }
 
@@ -22,7 +22,7 @@ final class ImmutableTest extends TestCase
     {
         $test = new ValidScalarImmutableArrayOf(['test']);
         $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('ArrayOfTest\Unit\Fixtures\ValidScalarImmutableArrayOf objects are immutable.');
+        $this->expectExceptionMessage('ValidScalarImmutableArrayOf objects are immutable.');
         unset($test[0]);
     }
 }

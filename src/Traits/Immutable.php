@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ArrayOf\Traits;
 
 use ArrayOf\Exceptions\ImmutabilityException;
+use ReflectionClass;
 
 trait Immutable
 {
@@ -16,7 +17,9 @@ trait Immutable
      */
     public function offsetSet($offset, $value): void
     {
-        throw new ImmutabilityException(self::class);
+        $className = (new ReflectionClass($this))->getShortName();
+
+        throw new ImmutabilityException($className);
     }
 
     /**
@@ -26,6 +29,8 @@ trait Immutable
      */
     public function offsetUnset($offset): void
     {
-        throw new ImmutabilityException(self::class);
+        $className = (new ReflectionClass($this))->getShortName();
+
+        throw new ImmutabilityException($className);
     }
 }
