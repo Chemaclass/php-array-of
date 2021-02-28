@@ -29,7 +29,7 @@ final class ArrayOfTest extends TestCase
             'key2' => 'value2',
         ];
 
-        $test = (array)new ArrayOfString($input);
+        $test = (array) new ArrayOfString($input);
 
         self::assertEquals(['key1', 'key2'], array_keys($test));
     }
