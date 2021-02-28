@@ -6,23 +6,19 @@ namespace ArrayOfTest\Unit;
 
 use ArrayOf\ArrayOf;
 use ArrayOf\Exceptions\InvalidEnforcementType;
-use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOfTest\Unit\Fixtures\InvalidClassArrayOf;
-use ArrayOfTest\Unit\Fixtures\InvalidScalarArrayOf;
+use ArrayOf\Scalars\Mutable\ArrayOfString;
+use ArrayOfTest\Unit\Fixtures\ArrayOfSimpleObjects;
 use ArrayOfTest\Unit\Fixtures\SimpleObject;
-use ArrayOfTest\Unit\Fixtures\ValidClassArrayOf;
-use ArrayOfTest\Unit\Fixtures\ValidScalarArrayOf;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 final class ArrayOfTest extends TestCase
 {
     public function testValidEnforcementTypes(): void
     {
-        $validScalar = new ValidScalarArrayOf([]);
+        $validScalar = new ArrayOfString();
         self::assertInstanceOf(ArrayOf::class, $validScalar);
 
-        $validClass = new ValidClassArrayOf([]);
+        $validClass = new ArrayOfSimpleObjects();
         self::assertInstanceOf(ArrayOf::class, $validClass);
     }
 
@@ -33,49 +29,47 @@ final class ArrayOfTest extends TestCase
             'key2' => 'value2',
         ];
 
-        $test = (array) new ValidScalarArrayOf($input);
+        $test = (array) new ArrayOfString($input);
 
-        self::assertEquals('key1', key($test));
-        next($test);
-        self::assertEquals('key2', key($test));
+        self::assertEquals(['key1', 'key2'], array_keys($test));
     }
 
     public function testInvalidScalarEnforcementType(): void
     {
         $this->expectException(InvalidEnforcementType::class);
-        new InvalidScalarArrayOf([]);
+
+        new class() extends ArrayOf {
+            protected function typeToEnforce(): string
+            {
+                return 'array';
+            }
+        };
     }
 
     public function testInvalidClassEnforcementType(): void
     {
         $this->expectException(InvalidEnforcementType::class);
-        new InvalidClassArrayOf([]);
+
+        new class([]) extends ArrayOf {
+            protected function typeToEnforce(): string
+            {
+                return 'InvalidClassName' . md5((string) time());
+            }
+        };
     }
 
     public function testValidInputTypes(): void
     {
-        $scalars = new ValidScalarArrayOf(['test', 'test-again']);
+        $scalars = new ArrayOfString(['test', 'test-again']);
         self::assertInstanceOf(ArrayOf::class, $scalars);
 
-        $classes = new ValidClassArrayOf([new SimpleObject(), new SimpleObject()]);
+        $classes = new ArrayOfSimpleObjects([new SimpleObject(), new SimpleObject()]);
         self::assertInstanceOf(ArrayOf::class, $classes);
-    }
-
-    public function testInvalidScalarInputType(): void
-    {
-        $this->expectException(InvalidInstantiationType::class);
-        new ValidScalarArrayOf([1]);
-    }
-
-    public function testInvalidClassInputType(): void
-    {
-        $this->expectException(InvalidInstantiationType::class);
-        new ValidClassArrayOf([new stdClass()]);
     }
 
     public function testCanUseAsArray(): void
     {
-        $test = new ValidScalarArrayOf(['test1', 'test2']);
+        $test = new ArrayOfString(['test1', 'test2']);
 
         self::assertEquals('test1', $test[0]);
         self::assertEquals('test2', $test[1]);
