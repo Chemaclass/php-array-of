@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayOfTest\Unit;
 
-use ArrayOf\ArrayOf;
+use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidEnforcementType;
 use ArrayOf\Scalars\Mutable\ArrayOfString;
 use ArrayOfTest\Unit\Fixtures\ArrayOfSimpleObjects;
@@ -16,10 +16,10 @@ final class ArrayOfTest extends TestCase
     public function testValidEnforcementTypes(): void
     {
         $validScalar = new ArrayOfString();
-        self::assertInstanceOf(ArrayOf::class, $validScalar);
+        self::assertInstanceOf(AbstractArrayOf::class, $validScalar);
 
         $validClass = new ArrayOfSimpleObjects();
-        self::assertInstanceOf(ArrayOf::class, $validClass);
+        self::assertInstanceOf(AbstractArrayOf::class, $validClass);
     }
 
     public function testKeysArePreserved(): void
@@ -38,7 +38,7 @@ final class ArrayOfTest extends TestCase
     {
         $this->expectException(InvalidEnforcementType::class);
 
-        new class() extends ArrayOf {
+        new class() extends AbstractArrayOf {
             protected function typeToEnforce(): string
             {
                 return 'array';
@@ -50,7 +50,7 @@ final class ArrayOfTest extends TestCase
     {
         $this->expectException(InvalidEnforcementType::class);
 
-        new class([]) extends ArrayOf {
+        new class([]) extends AbstractArrayOf {
             protected function typeToEnforce(): string
             {
                 return 'InvalidClassName' . md5((string) time());
@@ -61,10 +61,10 @@ final class ArrayOfTest extends TestCase
     public function testValidInputTypes(): void
     {
         $scalars = new ArrayOfString(['test', 'test-again']);
-        self::assertInstanceOf(ArrayOf::class, $scalars);
+        self::assertInstanceOf(AbstractArrayOf::class, $scalars);
 
         $classes = new ArrayOfSimpleObjects([new SimpleObject(), new SimpleObject()]);
-        self::assertInstanceOf(ArrayOf::class, $classes);
+        self::assertInstanceOf(AbstractArrayOf::class, $classes);
     }
 
     public function testCanUseAsArray(): void

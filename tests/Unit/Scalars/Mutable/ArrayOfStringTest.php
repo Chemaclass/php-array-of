@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ArrayOfTest\Unit\Scalars\Mutable;
 
-use ArrayOf\ArrayOf;
+use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
 use ArrayOf\Scalars\Mutable\ArrayOfString;
 use Generator;
@@ -17,7 +17,7 @@ final class ArrayOfStringTest extends TestCase
     {
         $test = new ArrayOfString(['test']);
         self::assertInstanceOf(ArrayOfString::class, $test);
-        self::assertInstanceOf(ArrayOf::class, $test);
+        self::assertInstanceOf(AbstractArrayOf::class, $test);
     }
 
     /**
