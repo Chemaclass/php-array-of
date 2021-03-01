@@ -12,3 +12,7 @@ Requires PHP >= 7.4
 ```
 composer require chemaclass/php-array-of
 ```
+
+### Git Hooks
+
+Enable the git hooks with `./tools/git-hooks/init.sh`
