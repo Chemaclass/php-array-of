@@ -6,7 +6,6 @@ namespace ArrayOf\Decorators;
 
 use ArrayObject;
 use ArrayOf\Exceptions\ImmutabilityException;
-use ReflectionClass;
 
 final class MakeImmutable extends ArrayObject
 {
@@ -23,9 +22,7 @@ final class MakeImmutable extends ArrayObject
      */
     public function offsetSet($offset, $value): void
     {
-        $className = (new ReflectionClass($this))->getShortName();
-
-        throw new ImmutabilityException($className);
+        throw new ImmutabilityException();
     }
 
     /**
@@ -35,8 +32,6 @@ final class MakeImmutable extends ArrayObject
      */
     public function offsetUnset($offset): void
     {
-        $className = (new ReflectionClass($this))->getShortName();
-
-        throw new ImmutabilityException($className);
+        throw new ImmutabilityException();
     }
 }
