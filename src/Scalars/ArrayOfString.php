@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Scalars\Immutable;
+namespace ArrayOf\Scalars;
 
 use ArrayOf\AbstractArrayOf;
-use ArrayOf\Traits\Immutable;
 
-final class ImmutableArrayOfString extends AbstractArrayOf
+final class ArrayOfString extends AbstractArrayOf
 {
-    use Immutable;
-
     protected function typeToEnforce(): string
     {
         return self::SCALAR_STRING;

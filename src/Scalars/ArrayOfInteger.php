@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Scalars\Mutable;
+namespace ArrayOf\Scalars;
 
 use ArrayOf\AbstractArrayOf;
 

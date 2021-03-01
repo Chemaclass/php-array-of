@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars\Immutable;
+namespace ArrayOfTest\Unit\Scalars;
 
+use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOf\Scalars\Immutable\ImmutableArrayOfBoolean;
-use ArrayOf\Traits\Immutable;
+use ArrayOf\Scalars\ArrayOfBoolean;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class ImmutableArrayOfBooleanTest extends TestCase
+final class ArrayOfBooleanTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ImmutableArrayOfBoolean([true]);
-        self::assertInstanceOf(ImmutableArrayOfBoolean::class, $test);
-        self::assertContains(Immutable::class, class_uses($test));
+        $test = new ArrayOfBoolean([true]);
+        self::assertInstanceOf(ArrayOfBoolean::class, $test);
+        self::assertInstanceOf(AbstractArrayOf::class, $test);
     }
 
     /**
@@ -26,7 +26,7 @@ final class ImmutableArrayOfBooleanTest extends TestCase
     public function testInvalidScalarInputType(array $arguments): void
     {
         $this->expectException(InvalidInstantiationType::class);
-        new ImmutableArrayOfBoolean($arguments);
+        new ArrayOfBoolean($arguments);
     }
 
     public function providerInvalidScalarInputType(): Generator

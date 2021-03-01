@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars\Mutable;
+namespace ArrayOfTest\Unit\Scalars;
 
 use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOf\Scalars\Mutable\ArrayOfInteger;
+use ArrayOf\Scalars\ArrayOfInteger;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;

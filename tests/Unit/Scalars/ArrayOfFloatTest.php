@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars\Immutable;
+namespace ArrayOfTest\Unit\Scalars;
 
+use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOf\Scalars\Immutable\ImmutableArrayOfInteger;
-use ArrayOf\Traits\Immutable;
+use ArrayOf\Scalars\ArrayOfFloat;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class ImmutableArrayOfIntegerTest extends TestCase
+final class ArrayOfFloatTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ImmutableArrayOfInteger([1]);
-        self::assertInstanceOf(ImmutableArrayOfInteger::class, $test);
-        self::assertContains(Immutable::class, class_uses($test));
+        $test = new ArrayOfFloat([1.5]);
+        self::assertInstanceOf(ArrayOfFloat::class, $test);
+        self::assertInstanceOf(AbstractArrayOf::class, $test);
     }
 
     /**
@@ -26,13 +26,13 @@ final class ImmutableArrayOfIntegerTest extends TestCase
     public function testInvalidScalarInputType(array $arguments): void
     {
         $this->expectException(InvalidInstantiationType::class);
-        new ImmutableArrayOfInteger($arguments);
+        new ArrayOfFloat($arguments);
     }
 
     public function providerInvalidScalarInputType(): Generator
     {
-        yield 'Receiving floats' => [
-            'arguments' => [1.23, 4.56],
+        yield 'Receiving integers' => [
+            'arguments' => [1, 2],
         ];
 
         yield 'Receiving booleans' => [

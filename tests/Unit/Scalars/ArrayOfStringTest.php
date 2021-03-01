@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars\Immutable;
+namespace ArrayOfTest\Unit\Scalars;
 
+use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOf\Scalars\Immutable\ImmutableArrayOfFloat;
-use ArrayOf\Traits\Immutable;
+use ArrayOf\Scalars\ArrayOfString;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class ImmutableArrayOfFloatTest extends TestCase
+final class ArrayOfStringTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ImmutableArrayOfFloat([1.5]);
-        self::assertInstanceOf(ImmutableArrayOfFloat::class, $test);
-        self::assertContains(Immutable::class, class_uses($test));
+        $test = new ArrayOfString(['test']);
+        self::assertInstanceOf(ArrayOfString::class, $test);
+        self::assertInstanceOf(AbstractArrayOf::class, $test);
     }
 
     /**
@@ -26,7 +26,7 @@ final class ImmutableArrayOfFloatTest extends TestCase
     public function testInvalidScalarInputType(array $arguments): void
     {
         $this->expectException(InvalidInstantiationType::class);
-        new ImmutableArrayOfFloat($arguments);
+        new ArrayOfString($arguments);
     }
 
     public function providerInvalidScalarInputType(): Generator
@@ -35,16 +35,16 @@ final class ImmutableArrayOfFloatTest extends TestCase
             'arguments' => [1, 2],
         ];
 
+        yield 'Receiving floats' => [
+            'arguments' => [1.23, 4.56],
+        ];
+
         yield 'Receiving booleans' => [
             'arguments' => [true, false],
         ];
 
         yield 'Receiving stdClasses' => [
             'arguments' => [new stdClass(), new stdClass()],
-        ];
-
-        yield 'Receiving strings' => [
-            'arguments' => ['str1', 'str2'],
         ];
 
         yield 'Receiving a mix of all scalars' => [
