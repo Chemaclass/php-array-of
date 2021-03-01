@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Traits;
+namespace ArrayOfTest\Unit\Decorators;
 
 use ArrayOf\Decorators\MakeImmutable;
 use ArrayOf\Exceptions\ImmutabilityException;
