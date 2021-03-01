@@ -8,7 +8,7 @@ use ArrayObject;
 use ArrayOf\Exceptions\InvalidEnforcementType;
 use ArrayOf\Exceptions\InvalidInstantiationType;
 
-abstract class ArrayOf extends ArrayObject
+abstract class AbstractArrayOf extends ArrayObject
 {
     protected const SCALAR_BOOLEAN = 'boolean';
     protected const SCALAR_INTEGER = 'integer';
@@ -34,12 +34,7 @@ abstract class ArrayOf extends ArrayObject
             throw InvalidEnforcementType::forType($this->typeToEnforce());
         }
 
-        array_map(function ($item): void {
-            // Enforce type of array items
-            if (!$this->checkType($item)) {
-                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
-            }
-        }, $input);
+        $this->guardEnforceType($input);
 
         parent::__construct($input);
     }
@@ -62,6 +57,15 @@ abstract class ArrayOf extends ArrayObject
     private function checkForScalar(): bool
     {
         return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
+    }
+
+    private function guardEnforceType(array $input): void
+    {
+        array_map(function ($item): void {
+            if (!$this->checkType($item)) {
+                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
+            }
+        }, $input);
     }
 
     /**

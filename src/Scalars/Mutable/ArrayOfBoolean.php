@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ArrayOf\Scalars\Mutable;
 
-use ArrayOf\ArrayOf;
+use ArrayOf\AbstractArrayOf;
 
-final class ArrayOfBoolean extends ArrayOf
+final class ArrayOfBoolean extends AbstractArrayOf
 {
     protected function typeToEnforce(): string
     {

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace ArrayOfTest\Unit\Fixtures;
 
-use ArrayOf\ArrayOf;
+use ArrayOf\AbstractArrayOf;
 
-final class ArrayOfSimpleObjects extends ArrayOf
+final class ArrayOfSimpleObjects extends AbstractArrayOf
 {
     protected function typeToEnforce(): string
     {
