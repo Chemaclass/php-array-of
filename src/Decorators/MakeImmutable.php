@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Traits;
+namespace ArrayOf\Decorators;
 
+use ArrayObject;
 use ArrayOf\Exceptions\ImmutabilityException;
 use ReflectionClass;
 
-trait Immutable
+final class MakeImmutable extends ArrayObject
 {
+    public function __construct(ArrayObject $input) {
+        parent::__construct($input);
+    }
+
     /**
      * @param mixed $offset
      * @param mixed $value
