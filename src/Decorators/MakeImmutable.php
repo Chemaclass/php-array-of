@@ -10,7 +10,8 @@ use ReflectionClass;
 
 final class MakeImmutable extends ArrayObject
 {
-    public function __construct(ArrayObject $input) {
+    public function __construct(ArrayObject $input)
+    {
         parent::__construct($input);
     }
 
