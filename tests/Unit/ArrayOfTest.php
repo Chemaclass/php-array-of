@@ -6,7 +6,7 @@ namespace ArrayOfTest\Unit;
 
 use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidEnforcementType;
-use ArrayOf\Scalars\Mutable\ArrayOfString;
+use ArrayOf\Scalars\ArrayOfString;
 use ArrayOfTest\Unit\Fixtures\ArrayOfSimpleObjects;
 use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use PHPUnit\Framework\TestCase;

@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars\Mutable;
+namespace ArrayOfTest\Unit\Scalars;
 
 use ArrayOf\AbstractArrayOf;
 use ArrayOf\Exceptions\InvalidInstantiationType;
-use ArrayOf\Scalars\Mutable\ArrayOfBoolean;
+use ArrayOf\Scalars\ArrayOfString;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-final class ArrayOfBooleanTest extends TestCase
+final class ArrayOfStringTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ArrayOfBoolean([true]);
-        self::assertInstanceOf(ArrayOfBoolean::class, $test);
+        $test = new ArrayOfString(['test']);
+        self::assertInstanceOf(ArrayOfString::class, $test);
         self::assertInstanceOf(AbstractArrayOf::class, $test);
     }
 
@@ -26,7 +26,7 @@ final class ArrayOfBooleanTest extends TestCase
     public function testInvalidScalarInputType(array $arguments): void
     {
         $this->expectException(InvalidInstantiationType::class);
-        new ArrayOfBoolean($arguments);
+        new ArrayOfString($arguments);
     }
 
     public function providerInvalidScalarInputType(): Generator
@@ -39,12 +39,12 @@ final class ArrayOfBooleanTest extends TestCase
             'arguments' => [1.23, 4.56],
         ];
 
-        yield 'Receiving stdClasses' => [
-            'arguments' => [new stdClass(), new stdClass()],
+        yield 'Receiving booleans' => [
+            'arguments' => [true, false],
         ];
 
-        yield 'Receiving strings' => [
-            'arguments' => ['str1', 'str2'],
+        yield 'Receiving stdClasses' => [
+            'arguments' => [new stdClass(), new stdClass()],
         ];
 
         yield 'Receiving a mix of all scalars' => [
