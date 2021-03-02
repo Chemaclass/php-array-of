@@ -8,7 +8,7 @@ use Exception;
 
 final class ImmutabilityException extends Exception
 {
-    public function __construct(string $className)
+    public function __construct()
     {
         parent::__construct('This ArrayOf object is immutable.');
     }

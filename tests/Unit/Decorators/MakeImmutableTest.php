@@ -14,16 +14,20 @@ final class MakeImmutableTest extends TestCase
     public function testImmutabilityOfSet(): void
     {
         $test = new MakeImmutable(new ArrayOfString(['test']));
+
         $this->expectException(ImmutabilityException::class);
         $this->expectExceptionMessage('This ArrayOf object is immutable.');
+
         $test[] = 'invalid';
     }
 
     public function testImmutabilityOfUnset(): void
     {
         $test = new MakeImmutable(new ArrayOfString(['test']));
+
         $this->expectException(ImmutabilityException::class);
         $this->expectExceptionMessage('This ArrayOf object is immutable.');
+
         unset($test[0]);
     }
 }
