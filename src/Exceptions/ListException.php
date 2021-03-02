@@ -8,8 +8,8 @@ use Exception;
 
 final class ListException extends Exception
 {
-    public function __construct()
+    public static function keysNotAllowed(): self
     {
-        parent::__construct('This ArrayOf object can not have keys.');
+        return new self('This ArrayOf object can not have keys.');
     }
 }

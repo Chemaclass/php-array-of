@@ -13,8 +13,7 @@ final class MakeListTest extends TestCase
 {
     public function testMakeListConstructorThrowsAnExceptionWhenKeysAreSpecified(): void
     {
-        $this->expectException(ListException::class);
-        $this->expectExceptionMessage('This ArrayOf object can not have keys.');
+        $this->expectExceptionObject(ListException::keysNotAllowed());
 
         new MakeList(new ArrayOfString(['invalid' => 'test']));
     }
@@ -23,15 +22,14 @@ final class MakeListTest extends TestCase
     {
         $test = new MakeList(new ArrayOfString(['valid', 'test']));
 
-        $this->assertEquals('valid', $test[0]);
+        self::assertEquals('valid', $test[0]);
     }
 
     public function testMakeListSetterThrowsAnExceptionWhenKeyIsSpecified(): void
     {
         $test = new MakeList(new ArrayOfString(['test']));
 
-        $this->expectException(ListException::class);
-        $this->expectExceptionMessage('This ArrayOf object can not have keys.');
+        $this->expectExceptionObject(ListException::keysNotAllowed());
 
         $test['key'] = 'invalid';
     }
@@ -42,7 +40,7 @@ final class MakeListTest extends TestCase
 
         $test[] = 'valid';
 
-        $this->assertEquals('valid', $test[1]);
+        self::assertEquals('valid', $test[1]);
     }
 
     public function testMakeListSetterDoesNotThrowAnyExceptionWhenAnElementIsModifiedByKey(): void
@@ -51,6 +49,6 @@ final class MakeListTest extends TestCase
 
         $test[0] = 'modified';
 
-        $this->assertEquals('modified', $test[0]);
+        self::assertEquals('modified', $test[0]);
     }
 }

@@ -10,8 +10,6 @@ use ArrayOf\Exceptions\ListException;
 final class MakeList extends ArrayObject
 {
     /**
-     * @param ArrayObject $input
-     *
      * @throws ListException
      */
     public function __construct(ArrayObject $input)
@@ -22,14 +20,12 @@ final class MakeList extends ArrayObject
     }
 
     /**
-     * @param ArrayObject $input
-     *
      * @throws ListException
      */
     private static function checkForAssociative(ArrayObject $input): void
     {
         if (array_values((array) $input) !== (array) $input) {
-            throw new ListException();
+            throw ListException::keysNotAllowed();
         }
     }
 
@@ -42,7 +38,7 @@ final class MakeList extends ArrayObject
     public function offsetSet($offset, $value): void
     {
         if (isset($offset) && !isset($this[$offset])) {
-            throw new ListException();
+            throw ListException::keysNotAllowed();
         }
 
         parent::offsetSet($offset, $value);
