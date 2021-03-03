@@ -39,6 +39,7 @@ final class ArrayOfArticles extends AbstractArrayOf
     public function __construct(array $input = [])
     {
         parent::__construct($input);
+        // FIXME: This does not work, ArrayOfArticles objects are not immutable
         new MakeImmutable($this);
     }
 
