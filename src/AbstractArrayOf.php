@@ -91,6 +91,12 @@ abstract class AbstractArrayOf extends ArrayObject
             : gettype($variable);
     }
 
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @throws InvalidTypeException
+     */
     public function offsetSet($key, $value): void
     {
         if (!$this->checkType($value)) {
