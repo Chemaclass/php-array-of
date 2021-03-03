@@ -6,7 +6,7 @@ namespace ArrayOf;
 
 use ArrayObject;
 use ArrayOf\Exceptions\InvalidEnforcementType;
-use ArrayOf\Exceptions\InvalidInstantiationType;
+use ArrayOf\Exceptions\InvalidTypeException;
 
 abstract class AbstractArrayOf extends ArrayObject
 {
@@ -26,7 +26,7 @@ abstract class AbstractArrayOf extends ArrayObject
 
     /**
      * @throws InvalidEnforcementType
-     * @throws InvalidInstantiationType
+     * @throws InvalidTypeException
      */
     public function __construct(array $input = [])
     {
@@ -63,7 +63,7 @@ abstract class AbstractArrayOf extends ArrayObject
     {
         array_map(function ($item): void {
             if (!$this->checkType($item)) {
-                throw InvalidInstantiationType::forType(static::class, static::getType($item), $this->typeToEnforce());
+                throw InvalidTypeException::onInstantiate(static::class, static::getType($item), $this->typeToEnforce());
             }
         }, $input);
     }
@@ -89,5 +89,14 @@ abstract class AbstractArrayOf extends ArrayObject
         return is_object($variable)
             ? get_class($variable)
             : gettype($variable);
+    }
+
+    public function offsetSet($key, $value): void
+    {
+        if (!$this->checkType($value)) {
+            throw InvalidTypeException::onAdd(static::class, static::getType($value), $this->typeToEnforce());
+        }
+
+        parent::offsetSet($key, $value);
     }
 }
