@@ -6,15 +6,15 @@ namespace ArrayOfTest\Unit\Fixtures;
 
 use ArrayOf\AbstractArrayOf;
 
-final class ImmutableArrayOfSimpleObjects extends AbstractArrayOf
+final class ListOfString extends AbstractArrayOf
 {
     protected function typeToEnforce(): string
     {
-        return SimpleObject::class;
+        return self::SCALAR_STRING;
     }
 
-    protected function isMutable(): bool
+    protected function collectionType(): string
     {
-        return false;
+        return self::COLLECTION_TYPE_LIST;
     }
 }
