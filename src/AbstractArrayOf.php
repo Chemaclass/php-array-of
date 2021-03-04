@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ArrayOf;
 
 use ArrayObject;
-use ArrayOf\Exceptions\InvalidEnforcementType;
+use ArrayOf\Exceptions\InvalidSetupException;
 use ArrayOf\Exceptions\InvalidTypeException;
 
 abstract class AbstractArrayOf extends ArrayObject
@@ -15,6 +15,10 @@ abstract class AbstractArrayOf extends ArrayObject
     protected const SCALAR_DOUBLE = 'double';
     protected const SCALAR_STRING = 'string';
 
+    protected const COLLECTION_TYPE_ARRAY = 'array';
+    protected const COLLECTION_TYPE_LIST = 'list';
+    protected const COLLECTION_TYPE_MAP = 'map';
+
     private const POSSIBLE_SCALARS = [
         self::SCALAR_BOOLEAN,
         self::SCALAR_INTEGER,
@@ -22,16 +26,36 @@ abstract class AbstractArrayOf extends ArrayObject
         self::SCALAR_STRING,
     ];
 
+    private const POSSIBLE_COLLECTION_TYPES = [
+        self::COLLECTION_TYPE_ARRAY,
+        self::COLLECTION_TYPE_LIST,
+        self::COLLECTION_TYPE_MAP,
+    ];
+
     abstract protected function typeToEnforce(): string;
 
+    protected function isMutable(): bool
+    {
+        return true;
+    }
+
+    protected function collectionType(): string
+    {
+        return self::COLLECTION_TYPE_ARRAY;
+    }
+
     /**
-     * @throws InvalidEnforcementType
+     * @throws InvalidSetupException
      * @throws InvalidTypeException
      */
     public function __construct(array $input = [])
     {
-        if (!$this->checkEnforcementType()) {
-            throw InvalidEnforcementType::forType($this->typeToEnforce());
+        if (!$this->checkCollectionType()) {
+            throw InvalidSetupException::forCollectionType($this->collectionType());
+        }
+
+        if (!$this->checkTypeToEnforce()) {
+            throw InvalidSetupException::forEnforceType($this->typeToEnforce());
         }
 
         $this->guardEnforceType($input);
@@ -39,13 +63,18 @@ abstract class AbstractArrayOf extends ArrayObject
         parent::__construct($input);
     }
 
-    private function checkEnforcementType(): bool
+    private function checkTypeToEnforce(): bool
     {
         if ($this->checkForValidClass()) {
             return true;
         }
 
         return $this->checkForScalar();
+    }
+
+    private function checkCollectionType(): bool
+    {
+        return in_array($this->collectionType(), self::POSSIBLE_COLLECTION_TYPES);
     }
 
     private function checkForValidClass(): bool

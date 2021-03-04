@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace ArrayOfTest\Unit;
 
 use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidEnforcementType;
+use ArrayOf\Exceptions\InvalidSetupException;
 use ArrayOf\Scalars\ArrayOfString;
 use ArrayOfTest\Unit\Fixtures\ArrayOfSimpleObjects;
 use ArrayOfTest\Unit\Fixtures\SimpleObject;
@@ -36,7 +36,7 @@ final class ArrayOfTest extends TestCase
 
     public function testInvalidScalarEnforcementType(): void
     {
-        $this->expectException(InvalidEnforcementType::class);
+        $this->expectException(InvalidSetupException::class);
 
         new class() extends AbstractArrayOf {
             protected function typeToEnforce(): string
@@ -48,7 +48,7 @@ final class ArrayOfTest extends TestCase
 
     public function testInvalidClassEnforcementType(): void
     {
-        $this->expectException(InvalidEnforcementType::class);
+        $this->expectException(InvalidSetupException::class);
 
         new class([]) extends AbstractArrayOf {
             protected function typeToEnforce(): string
