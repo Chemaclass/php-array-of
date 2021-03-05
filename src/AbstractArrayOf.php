@@ -47,7 +47,7 @@ abstract class AbstractArrayOf extends ArrayObject
     }
 
     /**
-     * @param array $input
+     * @param mixed[] $input
      *
      * @throws InvalidSetupException
      * @throws InvalidTypeException
@@ -143,11 +143,7 @@ abstract class AbstractArrayOf extends ArrayObject
             throw new ImmutabilityException();
         }
 
-        if (
-            isset($key) &&
-            $this->collectionType() === self::COLLECTION_TYPE_LIST &&
-            !isset($this[$key])
-        ) {
+        if ($this->canOffsetSet($key)) {
             throw ListException::keysNotAllowed();
         }
 
@@ -156,6 +152,16 @@ abstract class AbstractArrayOf extends ArrayObject
         }
 
         parent::offsetSet($key, $value);
+    }
+
+    /**
+     * @param mixed $key
+     */
+    private function canOffsetSet($key): bool
+    {
+        return isset($key)
+            && $this->collectionType() === self::COLLECTION_TYPE_LIST
+            && !isset($this[$key]);
     }
 
     /**
@@ -173,7 +179,7 @@ abstract class AbstractArrayOf extends ArrayObject
     }
 
     /**
-     * @param array $input
+     * @param mixed[] $input
      *
      * @throws ListException
      */
