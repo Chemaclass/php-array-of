@@ -36,15 +36,19 @@ final class Article
 
 final class ArrayOfArticles extends AbstractArrayOf
 {
-    public function __construct(array $input = [])
-    {
-        parent::__construct($input);
-        new MakeImmutable($this);
-    }
-
     protected function typeToEnforce(): string
     {
         return Article::class;
+    }
+
+    protected function isMutable(): bool
+    {
+        return false;
+    }
+
+    protected function collectionType(): string
+    {
+        return self::COLLECTION_TYPE_LIST;
     }
 }
 

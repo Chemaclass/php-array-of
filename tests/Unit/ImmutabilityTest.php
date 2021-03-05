@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Decorators;
+namespace ArrayOfTest\Unit;
 
-use ArrayOf\Decorators\MakeImmutable;
 use ArrayOf\Exceptions\ImmutabilityException;
-use ArrayOf\Scalars\ArrayOfString;
+use ArrayOfTest\Unit\Fixtures\ImmutableArrayOfSimpleObjects;
+use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use PHPUnit\Framework\TestCase;
 
-final class MakeImmutableTest extends TestCase
+final class ImmutabilityTest extends TestCase
 {
     public function testImmutabilityOfSet(): void
     {
-        $test = new MakeImmutable(new ArrayOfString(['test']));
+        $test = new ImmutableArrayOfSimpleObjects([new SimpleObject()]);
 
         $this->expectException(ImmutabilityException::class);
         $this->expectExceptionMessage('This ArrayOf object is immutable.');
 
-        $test[] = 'invalid';
+        $test[] = new SimpleObject();
     }
 
     public function testImmutabilityOfUnset(): void
     {
-        $test = new MakeImmutable(new ArrayOfString(['test']));
+        $test = new ImmutableArrayOfSimpleObjects([new SimpleObject()]);
 
         $this->expectException(ImmutabilityException::class);
         $this->expectExceptionMessage('This ArrayOf object is immutable.');

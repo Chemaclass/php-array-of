@@ -2,32 +2,31 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Decorators;
+namespace ArrayOfTest\Unit;
 
-use ArrayOf\Decorators\MakeList;
 use ArrayOf\Exceptions\ListException;
-use ArrayOf\Scalars\ArrayOfString;
+use ArrayOfTest\Unit\Fixtures\ListOfString;
 use PHPUnit\Framework\TestCase;
 
-final class MakeListTest extends TestCase
+final class ListTest extends TestCase
 {
     public function testMakeListConstructorThrowsAnExceptionWhenKeysAreSpecified(): void
     {
         $this->expectExceptionObject(ListException::keysNotAllowed());
 
-        new MakeList(new ArrayOfString(['invalid' => 'test']));
+        new ListOfString(['invalid' => 'test']);
     }
 
     public function testMakeListConstructorDoesNotThrowAnyExceptionWhenKeysAreNotSpecified(): void
     {
-        $test = new MakeList(new ArrayOfString(['valid', 'test']));
+        $test = new ListOfString(['valid', 'test']);
 
         self::assertEquals('valid', $test[0]);
     }
 
     public function testMakeListSetterThrowsAnExceptionWhenKeyIsSpecified(): void
     {
-        $test = new MakeList(new ArrayOfString(['test']));
+        $test = new ListOfString(['test']);
 
         $this->expectExceptionObject(ListException::keysNotAllowed());
 
@@ -36,7 +35,7 @@ final class MakeListTest extends TestCase
 
     public function testMakeListSetterDoesNotThrowAnyExceptionWhenKeyIsNotSpecified(): void
     {
-        $test = new MakeList(new ArrayOfString(['test']));
+        $test = new ListOfString(['test']);
 
         $test[] = 'valid';
 
@@ -45,7 +44,7 @@ final class MakeListTest extends TestCase
 
     public function testMakeListSetterDoesNotThrowAnyExceptionWhenAnElementIsModifiedByKey(): void
     {
-        $test = new MakeList(new ArrayOfString(['unmodified']));
+        $test = new ListOfString(['unmodified']);
 
         $test[0] = 'modified';
 
