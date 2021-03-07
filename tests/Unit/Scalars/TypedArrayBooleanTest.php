@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars;
+namespace TypedArraysTest\Unit\Scalars;
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidTypeException;
-use ArrayOf\Scalars\ArrayOfInteger;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\InvalidTypeException;
+use TypedArrays\Scalars\TypedArrayBoolean;
 
-final class ArrayOfIntegerTest extends TestCase
+final class TypedArrayBooleanTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ArrayOfInteger([1]);
+        $test = new TypedArrayBoolean([true]);
 
-        self::assertInstanceOf(ArrayOfInteger::class, $test);
-        self::assertInstanceOf(AbstractArrayOf::class, $test);
+        self::assertInstanceOf(TypedArrayBoolean::class, $test);
+        self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
@@ -28,7 +28,7 @@ final class ArrayOfIntegerTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new ArrayOfInteger($arguments);
+        new TypedArrayBoolean($arguments);
     }
 
     /**
@@ -40,18 +40,18 @@ final class ArrayOfIntegerTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new ArrayOfInteger([]);
+        $test = new TypedArrayBoolean([]);
         $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
-        yield 'Receiving floats' => [
-            'arguments' => [1.23, 4.56],
+        yield 'Receiving integers' => [
+            'arguments' => [1, 2],
         ];
 
-        yield 'Receiving booleans' => [
-            'arguments' => [true, false],
+        yield 'Receiving floats' => [
+            'arguments' => [1.23, 4.56],
         ];
 
         yield 'Receiving stdClasses' => [
@@ -69,12 +69,12 @@ final class ArrayOfIntegerTest extends TestCase
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator
     {
-        yield 'Adding float' => [
-            'argument' => 1.23,
+        yield 'Adding integer' => [
+            'argument' => 1,
         ];
 
-        yield 'Adding boolean' => [
-            'argument' => true,
+        yield 'Adding float' => [
+            'argument' => 1.23,
         ];
 
         yield 'Adding stdClass' => [

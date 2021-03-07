@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars;
+namespace TypedArraysTest\Unit\Scalars;
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidTypeException;
-use ArrayOf\Scalars\ArrayOfFloat;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\InvalidTypeException;
+use TypedArrays\Scalars\TypedArrayString;
 
-final class ArrayOfFloatTest extends TestCase
+final class TypedArrayStringTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ArrayOfFloat([1.5]);
+        $test = new TypedArrayString(['test']);
 
-        self::assertInstanceOf(ArrayOfFloat::class, $test);
-        self::assertInstanceOf(AbstractArrayOf::class, $test);
+        self::assertInstanceOf(TypedArrayString::class, $test);
+        self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
@@ -28,7 +28,7 @@ final class ArrayOfFloatTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new ArrayOfFloat($arguments);
+        new TypedArrayString($arguments);
     }
 
     /**
@@ -40,7 +40,7 @@ final class ArrayOfFloatTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new ArrayOfFloat([]);
+        $test = new TypedArrayString([]);
         $test[] = $argument;
     }
 
@@ -50,16 +50,16 @@ final class ArrayOfFloatTest extends TestCase
             'arguments' => [1, 2],
         ];
 
+        yield 'Receiving floats' => [
+            'arguments' => [1.23, 4.56],
+        ];
+
         yield 'Receiving booleans' => [
             'arguments' => [true, false],
         ];
 
         yield 'Receiving stdClasses' => [
             'arguments' => [new stdClass(), new stdClass()],
-        ];
-
-        yield 'Receiving strings' => [
-            'arguments' => ['str1', 'str2'],
         ];
 
         yield 'Receiving a mix of all scalars' => [
@@ -73,16 +73,16 @@ final class ArrayOfFloatTest extends TestCase
             'argument' => 1,
         ];
 
+        yield 'Adding float' => [
+            'argument' => 1.23,
+        ];
+
         yield 'Adding boolean' => [
             'argument' => true,
         ];
 
         yield 'Adding stdClass' => [
             'argument' => new stdClass(),
-        ];
-
-        yield 'Adding string' => [
-            'argument' => 'str1',
         ];
     }
 }

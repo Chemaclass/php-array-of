@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf;
+namespace TypedArrays;
 
 use ArrayObject;
-use ArrayOf\Exceptions\ImmutabilityException;
-use ArrayOf\Exceptions\InvalidSetupException;
-use ArrayOf\Exceptions\InvalidTypeException;
-use ArrayOf\Exceptions\ListException;
+use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\InvalidSetupException;
+use TypedArrays\Exceptions\InvalidTypeException;
+use TypedArrays\Exceptions\ListException;
 
-abstract class AbstractArrayOf extends ArrayObject
+abstract class AbstractTypedArray extends ArrayObject
 {
     protected const SCALAR_BOOLEAN = 'boolean';
     protected const SCALAR_INTEGER = 'integer';

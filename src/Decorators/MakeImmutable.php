@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Decorators;
+namespace TypedArrays\Decorators;
 
 use ArrayObject;
-use ArrayOf\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\ImmutabilityException;
 
 final class MakeImmutable extends ArrayObject
 {

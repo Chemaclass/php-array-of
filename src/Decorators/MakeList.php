@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Decorators;
+namespace TypedArrays\Decorators;
 
 use ArrayObject;
-use ArrayOf\Exceptions\ListException;
+use TypedArrays\Exceptions\ListException;
 
 final class MakeList extends ArrayObject
 {

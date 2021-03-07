@@ -2,31 +2,31 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit;
+namespace TypedArraysTest\Unit;
 
-use ArrayOf\Exceptions\ImmutabilityException;
-use ArrayOfTest\Unit\Fixtures\ImmutableArrayOfSimpleObjects;
-use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use PHPUnit\Framework\TestCase;
+use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArraysTest\Unit\Fixtures\ImmutableTypedArraySimpleObjects;
+use TypedArraysTest\Unit\Fixtures\SimpleObject;
 
 final class ImmutabilityTest extends TestCase
 {
     public function testImmutabilityOfSet(): void
     {
-        $test = new ImmutableArrayOfSimpleObjects([new SimpleObject()]);
+        $test = new ImmutableTypedArraySimpleObjects([new SimpleObject()]);
 
         $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This ArrayOf object is immutable.');
+        $this->expectExceptionMessage('This TypedArray object is immutable.');
 
         $test[] = new SimpleObject();
     }
 
     public function testImmutabilityOfUnset(): void
     {
-        $test = new ImmutableArrayOfSimpleObjects([new SimpleObject()]);
+        $test = new ImmutableTypedArraySimpleObjects([new SimpleObject()]);
 
         $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This ArrayOf object is immutable.');
+        $this->expectExceptionMessage('This TypedArray object is immutable.');
 
         unset($test[0]);
     }
