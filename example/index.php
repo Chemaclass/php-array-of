@@ -2,8 +2,8 @@
 
 declare(strict_types = 1);
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Decorators\MakeImmutable;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Decorators\MakeImmutable;
 
 require getcwd() . '/vendor/autoload.php';
 
@@ -34,7 +34,7 @@ final class Article
     }
 }
 
-final class ArrayOfArticles extends AbstractArrayOf
+final class TypedArrayArticles extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
@@ -52,14 +52,14 @@ final class ArrayOfArticles extends AbstractArrayOf
     }
 }
 
-function renderArticles(ArrayOfArticles $articles): void
+function renderArticles(TypedArrayArticles $articles): void
 {
     foreach ($articles as $article) {
         echo $article . PHP_EOL;
     }
 }
 
-$articles = new ArrayOfArticles([
+$articles = new TypedArrayArticles([
     new Article(1, 'article-1'),
     new Article(2, 'article-2'),
 ]);

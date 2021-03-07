@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit;
+namespace TypedArraysTest\Unit;
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidSetupException;
-use ArrayOf\Scalars\ArrayOfString;
-use ArrayOfTest\Unit\Fixtures\ArrayOfSimpleObjects;
-use ArrayOfTest\Unit\Fixtures\SimpleObject;
 use PHPUnit\Framework\TestCase;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\InvalidSetupException;
+use TypedArrays\Scalars\TypedArrayString;
+use TypedArraysTest\Unit\Fixtures\SimpleObject;
+use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
 
-final class ArrayOfTest extends TestCase
+final class TypedArrayTest extends TestCase
 {
     public function testValidEnforcementTypes(): void
     {
-        $validScalar = new ArrayOfString();
-        self::assertInstanceOf(AbstractArrayOf::class, $validScalar);
+        $validScalar = new TypedArrayString();
+        self::assertInstanceOf(AbstractTypedArray::class, $validScalar);
 
-        $validClass = new ArrayOfSimpleObjects();
-        self::assertInstanceOf(AbstractArrayOf::class, $validClass);
+        $validClass = new TypedArraySimpleObjects();
+        self::assertInstanceOf(AbstractTypedArray::class, $validClass);
     }
 
     public function testKeysArePreserved(): void
@@ -29,7 +29,7 @@ final class ArrayOfTest extends TestCase
             'key2' => 'value2',
         ];
 
-        $test = (array) new ArrayOfString($input);
+        $test = (array) new TypedArrayString($input);
 
         self::assertEquals(['key1', 'key2'], array_keys($test));
     }
@@ -38,7 +38,7 @@ final class ArrayOfTest extends TestCase
     {
         $this->expectException(InvalidSetupException::class);
 
-        new class() extends AbstractArrayOf {
+        new class() extends AbstractTypedArray {
             protected function typeToEnforce(): string
             {
                 return 'array';
@@ -50,7 +50,7 @@ final class ArrayOfTest extends TestCase
     {
         $this->expectException(InvalidSetupException::class);
 
-        new class([]) extends AbstractArrayOf {
+        new class([]) extends AbstractTypedArray {
             protected function typeToEnforce(): string
             {
                 return 'InvalidClassName' . md5((string) time());
@@ -60,16 +60,16 @@ final class ArrayOfTest extends TestCase
 
     public function testValidInputTypes(): void
     {
-        $scalars = new ArrayOfString(['test', 'test-again']);
-        self::assertInstanceOf(AbstractArrayOf::class, $scalars);
+        $scalars = new TypedArrayString(['test', 'test-again']);
+        self::assertInstanceOf(AbstractTypedArray::class, $scalars);
 
-        $classes = new ArrayOfSimpleObjects([new SimpleObject(), new SimpleObject()]);
-        self::assertInstanceOf(AbstractArrayOf::class, $classes);
+        $classes = new TypedArraySimpleObjects([new SimpleObject(), new SimpleObject()]);
+        self::assertInstanceOf(AbstractTypedArray::class, $classes);
     }
 
     public function testCanUseAsArray(): void
     {
-        $test = new ArrayOfString(['test1', 'test2']);
+        $test = new TypedArrayString(['test1', 'test2']);
 
         self::assertEquals('test1', $test[0]);
         self::assertEquals('test2', $test[1]);

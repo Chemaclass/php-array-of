@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Fixtures;
+namespace TypedArraysTest\Unit\Fixtures;
 
-use ArrayOf\AbstractArrayOf;
+use TypedArrays\AbstractTypedArray;
 
-final class ImmutableArrayOfSimpleObjects extends AbstractArrayOf
+final class ImmutableTypedArraySimpleObjects extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {

@@ -1,5 +1,5 @@
 {
-  "name": "chemaclass/php-array-of",
+  "name": "chemaclass/typed-arrays",
   "description": "Generics replacement for PHP.",
   "type": "library",
   "license": "MIT",
@@ -13,12 +13,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ArrayOf\\": "src/"
+      "TypedArrays\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ArrayOfTest\\": "tests"
+      "TypedArraysTest\\": "tests"
     }
   },
   "scripts": {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit;
+namespace TypedArraysTest\Unit;
 
-use ArrayOf\Exceptions\ListException;
-use ArrayOfTest\Unit\Fixtures\ListOfString;
 use PHPUnit\Framework\TestCase;
+use TypedArrays\Exceptions\ListException;
+use TypedArraysTest\Unit\Fixtures\ListOfString;
 
 final class ListTest extends TestCase
 {

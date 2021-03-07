@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars;
+namespace TypedArraysTest\Unit\Scalars;
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidTypeException;
-use ArrayOf\Scalars\ArrayOfString;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\InvalidTypeException;
+use TypedArrays\Scalars\TypedArrayInteger;
 
-final class ArrayOfStringTest extends TestCase
+final class TypedArrayIntegerTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ArrayOfString(['test']);
+        $test = new TypedArrayInteger([1]);
 
-        self::assertInstanceOf(ArrayOfString::class, $test);
-        self::assertInstanceOf(AbstractArrayOf::class, $test);
+        self::assertInstanceOf(TypedArrayInteger::class, $test);
+        self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
@@ -28,7 +28,7 @@ final class ArrayOfStringTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new ArrayOfString($arguments);
+        new TypedArrayInteger($arguments);
     }
 
     /**
@@ -40,16 +40,12 @@ final class ArrayOfStringTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new ArrayOfString([]);
+        $test = new TypedArrayInteger([]);
         $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
-        yield 'Receiving integers' => [
-            'arguments' => [1, 2],
-        ];
-
         yield 'Receiving floats' => [
             'arguments' => [1.23, 4.56],
         ];
@@ -62,6 +58,10 @@ final class ArrayOfStringTest extends TestCase
             'arguments' => [new stdClass(), new stdClass()],
         ];
 
+        yield 'Receiving strings' => [
+            'arguments' => ['str1', 'str2'],
+        ];
+
         yield 'Receiving a mix of all scalars' => [
             'arguments' => [true, 1, 2.3, 'string', new stdClass()],
         ];
@@ -69,10 +69,6 @@ final class ArrayOfStringTest extends TestCase
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator
     {
-        yield 'Adding integer' => [
-            'argument' => 1,
-        ];
-
         yield 'Adding float' => [
             'argument' => 1.23,
         ];
@@ -83,6 +79,10 @@ final class ArrayOfStringTest extends TestCase
 
         yield 'Adding stdClass' => [
             'argument' => new stdClass(),
+        ];
+
+        yield 'Adding string' => [
+            'argument' => 'str1',
         ];
     }
 }

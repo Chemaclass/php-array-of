@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Scalars;
+namespace TypedArraysTest\Unit\Scalars;
 
-use ArrayOf\AbstractArrayOf;
-use ArrayOf\Exceptions\InvalidTypeException;
-use ArrayOf\Scalars\ArrayOfBoolean;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
+use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\InvalidTypeException;
+use TypedArrays\Scalars\TypedArrayFloat;
 
-final class ArrayOfBooleanTest extends TestCase
+final class TypedArrayFloatTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new ArrayOfBoolean([true]);
+        $test = new TypedArrayFloat([1.5]);
 
-        self::assertInstanceOf(ArrayOfBoolean::class, $test);
-        self::assertInstanceOf(AbstractArrayOf::class, $test);
+        self::assertInstanceOf(TypedArrayFloat::class, $test);
+        self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
@@ -28,7 +28,7 @@ final class ArrayOfBooleanTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new ArrayOfBoolean($arguments);
+        new TypedArrayFloat($arguments);
     }
 
     /**
@@ -40,7 +40,7 @@ final class ArrayOfBooleanTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new ArrayOfBoolean([]);
+        $test = new TypedArrayFloat([]);
         $test[] = $argument;
     }
 
@@ -50,8 +50,8 @@ final class ArrayOfBooleanTest extends TestCase
             'arguments' => [1, 2],
         ];
 
-        yield 'Receiving floats' => [
-            'arguments' => [1.23, 4.56],
+        yield 'Receiving booleans' => [
+            'arguments' => [true, false],
         ];
 
         yield 'Receiving stdClasses' => [
@@ -73,8 +73,8 @@ final class ArrayOfBooleanTest extends TestCase
             'argument' => 1,
         ];
 
-        yield 'Adding float' => [
-            'argument' => 1.23,
+        yield 'Adding boolean' => [
+            'argument' => true,
         ];
 
         yield 'Adding stdClass' => [

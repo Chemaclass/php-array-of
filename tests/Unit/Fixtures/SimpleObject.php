@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ArrayOfTest\Unit\Fixtures;
+namespace TypedArraysTest\Unit\Fixtures;
 
 final class SimpleObject
 {

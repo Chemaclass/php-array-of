@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Exceptions;
+namespace TypedArrays\Exceptions;
 
 use Exception;
 
@@ -10,6 +10,6 @@ final class ListException extends Exception
 {
     public static function keysNotAllowed(): self
     {
-        return new self('This ArrayOf object is a list and can not have keys.');
+        return new self('This TypedArray object is a list and can not have keys.');
     }
 }

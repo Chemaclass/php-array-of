@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Scalars;
+namespace TypedArrays\Scalars;
 
-use ArrayOf\AbstractArrayOf;
+use TypedArrays\AbstractTypedArray;
 
-final class ArrayOfString extends AbstractArrayOf
+final class TypedArrayString extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {

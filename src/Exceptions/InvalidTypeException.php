@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ArrayOf\Exceptions;
+namespace TypedArrays\Exceptions;
 
 use InvalidArgumentException;
 
