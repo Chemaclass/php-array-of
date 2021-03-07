@@ -3,7 +3,6 @@
 declare(strict_types = 1);
 
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Decorators\MakeImmutable;
 
 require getcwd() . '/vendor/autoload.php';
 
