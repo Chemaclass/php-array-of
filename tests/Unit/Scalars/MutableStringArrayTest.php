@@ -31,19 +31,6 @@ final class MutableStringArrayTest extends TestCase
         new MutableStringArray($arguments);
     }
 
-    /**
-     * @dataProvider providerInvalidScalarInputTypeOnAdd
-     *
-     * @param mixed $argument
-     */
-    public function test_invalid_scalar_input_type_on_add($argument): void
-    {
-        $this->expectException(InvalidTypeException::class);
-
-        $test = new MutableStringArray([]);
-        $test[] = $argument;
-    }
-
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
         yield 'Receiving integers' => [
@@ -65,6 +52,19 @@ final class MutableStringArrayTest extends TestCase
         yield 'Receiving a mix of all scalars' => [
             'arguments' => [true, 1, 2.3, 'string', new stdClass()],
         ];
+    }
+
+    /**
+     * @dataProvider providerInvalidScalarInputTypeOnAdd
+     *
+     * @param mixed $argument
+     */
+    public function test_invalid_scalar_input_type_on_add($argument): void
+    {
+        $this->expectException(InvalidTypeException::class);
+
+        $test = new MutableStringArray([]);
+        $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator

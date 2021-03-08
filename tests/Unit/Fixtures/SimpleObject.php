@@ -8,7 +8,7 @@ final class SimpleObject
 {
     private ?string $value;
 
-    public function __construct(?string $value = null)
+    public function __construct(string $value = null)
     {
         $this->value = $value;
     }
