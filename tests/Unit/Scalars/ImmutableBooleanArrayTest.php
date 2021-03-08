@@ -14,7 +14,7 @@ use TypedArrays\Scalars\ImmutableBooleanArray;
 
 final class ImmutableBooleanArrayTest extends TestCase
 {
-    public function testConstruct(): void
+    public function test_construct(): void
     {
         $test = new ImmutableBooleanArray([true]);
 
@@ -25,7 +25,7 @@ final class ImmutableBooleanArrayTest extends TestCase
     /**
      * @dataProvider providerInvalidScalarInputType
      */
-    public function testInvalidScalarInputType(array $arguments): void
+    public function test_invalid_scalar_input_type(array $arguments): void
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -55,7 +55,7 @@ final class ImmutableBooleanArrayTest extends TestCase
         ];
     }
 
-    public function testImmutabilityOfSet(): void
+    public function test_immutability_of_set(): void
     {
         $test = new ImmutableBooleanArray([true]);
 
@@ -65,7 +65,7 @@ final class ImmutableBooleanArrayTest extends TestCase
         $test[] = false;
     }
 
-    public function testImmutabilityOfUnset(): void
+    public function test_immutability_of_unset(): void
     {
         $test = new ImmutableBooleanArray([false]);
 

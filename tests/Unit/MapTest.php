@@ -10,21 +10,21 @@ use TypedArraysTest\Unit\Fixtures\MapOfString;
 
 final class MapTest extends TestCase
 {
-    public function testMapConstructorThrowsAnExceptionWhenKeysAreNotSpecified(): void
+    public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
     {
         $this->expectExceptionObject(MapException::keysRequired());
 
         new MapOfString(['invalid']);
     }
 
-    public function testMapConstructorDoesNotThrowAnyExceptionWhenKeysAreSpecified(): void
+    public function test_map_constructor_does_not_throw_any_exception_when_keys_are_specified(): void
     {
         $test = new MapOfString(['valid' => 'test']);
 
         self::assertEquals('test', $test['valid']);
     }
 
-    public function testMapSetterThrowsAnExceptionWhenKeyIsNotSpecified(): void
+    public function test_map_setter_throws_an_exception_when_key_is_not_specified(): void
     {
         $test = new MapOfString(['valid' => 'test']);
 
@@ -33,7 +33,7 @@ final class MapTest extends TestCase
         $test[] = 'invalid';
     }
 
-    public function testMapSetterDoesNotThrowAnyExceptionWhenKeyIsSpecified(): void
+    public function test_map_setter_does_not_throw_any_exception_when_key_is_specified(): void
     {
         $test = new MapOfString(['key' => 'test']);
 

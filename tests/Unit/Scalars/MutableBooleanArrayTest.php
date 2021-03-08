@@ -13,7 +13,7 @@ use TypedArrays\Scalars\MutableBooleanArray;
 
 final class MutableBooleanArrayTest extends TestCase
 {
-    public function testConstruct(): void
+    public function test_construct(): void
     {
         $test = new MutableBooleanArray([true]);
 
@@ -24,7 +24,7 @@ final class MutableBooleanArrayTest extends TestCase
     /**
      * @dataProvider providerInvalidScalarInputTypeOnInstantiate
      */
-    public function testInvalidScalarInputTypeOnInstantiate(array $arguments): void
+    public function test_invalid_scalar_input_type_on_instantiate(array $arguments): void
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -36,7 +36,7 @@ final class MutableBooleanArrayTest extends TestCase
      *
      * @param mixed $argument
      */
-    public function testInvalidScalarInputTypeOnAdd($argument): void
+    public function test_invalid_scalar_input_type_on_add($argument): void
     {
         $this->expectException(InvalidTypeException::class);
 

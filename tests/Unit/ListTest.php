@@ -10,21 +10,21 @@ use TypedArraysTest\Unit\Fixtures\ListOfString;
 
 final class ListTest extends TestCase
 {
-    public function testListConstructorThrowsAnExceptionWhenKeysAreSpecified(): void
+    public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
         $this->expectExceptionObject(ListException::keysNotAllowed());
 
         new ListOfString(['invalid' => 'test']);
     }
 
-    public function testListConstructorDoesNotThrowAnyExceptionWhenKeysAreNotSpecified(): void
+    public function test_list_constructor_does_not_throw_any_exception_when_keys_are_not_specified(): void
     {
         $test = new ListOfString(['valid', 'test']);
 
         self::assertEquals('valid', $test[0]);
     }
 
-    public function testListSetterThrowsAnExceptionWhenKeyIsSpecified(): void
+    public function test_list_setter_throws_an_exception_when_key_is_specified(): void
     {
         $test = new ListOfString(['test']);
 
@@ -33,7 +33,7 @@ final class ListTest extends TestCase
         $test['key'] = 'invalid';
     }
 
-    public function testListSetterDoesNotThrowAnyExceptionWhenKeyIsNotSpecified(): void
+    public function test_list_setter_does_not_throw_any_exception_when_key_is_not_specified(): void
     {
         $test = new ListOfString(['test']);
 
@@ -42,7 +42,7 @@ final class ListTest extends TestCase
         self::assertEquals('valid', $test[1]);
     }
 
-    public function testListSetterDoesNotThrowAnyExceptionWhenAnElementIsModifiedByKey(): void
+    public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
     {
         $test = new ListOfString(['unmodified']);
 

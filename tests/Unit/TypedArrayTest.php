@@ -13,7 +13,7 @@ use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
 
 final class TypedArrayTest extends TestCase
 {
-    public function testValidEnforcementTypes(): void
+    public function test_valid_enforcement_types(): void
     {
         $validScalar = new MutableStringArray();
         self::assertInstanceOf(AbstractTypedArray::class, $validScalar);
@@ -22,7 +22,7 @@ final class TypedArrayTest extends TestCase
         self::assertInstanceOf(AbstractTypedArray::class, $validClass);
     }
 
-    public function testKeysArePreserved(): void
+    public function test_keys_are_preserved(): void
     {
         $input = [
             'key1' => 'value1',
@@ -34,7 +34,7 @@ final class TypedArrayTest extends TestCase
         self::assertEquals(['key1', 'key2'], array_keys($test));
     }
 
-    public function testInvalidScalarEnforcementType(): void
+    public function test_invalid_scalar_enforcement_type(): void
     {
         $this->expectException(InvalidSetupException::class);
 
@@ -46,7 +46,7 @@ final class TypedArrayTest extends TestCase
         };
     }
 
-    public function testInvalidClassEnforcementType(): void
+    public function test_invalid_class_enforcement_type(): void
     {
         $this->expectException(InvalidSetupException::class);
 
@@ -58,7 +58,7 @@ final class TypedArrayTest extends TestCase
         };
     }
 
-    public function testValidInputTypes(): void
+    public function test_valid_input_types(): void
     {
         $scalars = new MutableStringArray(['test', 'test-again']);
         self::assertInstanceOf(AbstractTypedArray::class, $scalars);
@@ -67,7 +67,7 @@ final class TypedArrayTest extends TestCase
         self::assertInstanceOf(AbstractTypedArray::class, $classes);
     }
 
-    public function testCanUseAsArray(): void
+    public function test_can_use_as_array(): void
     {
         $test = new MutableStringArray(['test1', 'test2']);
 
