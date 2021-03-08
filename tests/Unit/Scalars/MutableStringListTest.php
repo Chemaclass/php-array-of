@@ -98,7 +98,7 @@ final class MutableStringListTest extends TestCase
     {
         $test = new MutableStringList(['test']);
 
-        self::assertEquals('test', $test[0]);
+        self::assertSame('test', $test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
@@ -116,7 +116,7 @@ final class MutableStringListTest extends TestCase
 
         $test[] = 'valid';
 
-        self::assertEquals('valid', $test[1]);
+        self::assertSame('valid', $test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
@@ -125,6 +125,6 @@ final class MutableStringListTest extends TestCase
 
         $test[0] = 'modified';
 
-        self::assertEquals('modified', $test[0]);
+        self::assertSame('modified', $test[0]);
     }
 }

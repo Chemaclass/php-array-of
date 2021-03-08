@@ -21,7 +21,7 @@ final class MapTest extends TestCase
     {
         $test = new MapOfString(['valid' => 'test']);
 
-        self::assertEquals('test', $test['valid']);
+        self::assertSame('test', $test['valid']);
     }
 
     public function test_map_setter_throws_an_exception_when_key_is_not_specified(): void
@@ -39,6 +39,6 @@ final class MapTest extends TestCase
 
         $test['valid'] = 'expected';
 
-        self::assertEquals('expected', $test['valid']);
+        self::assertSame('expected', $test['valid']);
     }
 }

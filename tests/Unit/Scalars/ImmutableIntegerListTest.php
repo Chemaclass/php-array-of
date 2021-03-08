@@ -87,6 +87,6 @@ final class ImmutableIntegerListTest extends TestCase
     {
         $test = new ImmutableIntegerList([2]);
 
-        self::assertEquals(2, $test[0]);
+        self::assertSame(2, $test[0]);
     }
 }

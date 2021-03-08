@@ -20,9 +20,11 @@ final class ListTest extends TestCase
 
     public function test_list_constructor_does_not_throw_any_exception_when_keys_are_not_specified(): void
     {
-        $test = new MutableSimpleObjectList([new SimpleObject('valid')]);
+        $expected = new SimpleObject('valid');
 
-        self::assertEquals(new SimpleObject('valid'), $test[0]);
+        $test = new MutableSimpleObjectList([$expected]);
+
+        self::assertSame($expected, $test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
@@ -36,19 +38,21 @@ final class ListTest extends TestCase
 
     public function test_list_setter_does_not_throw_any_exception_when_key_is_not_specified(): void
     {
-        $test = new MutableSimpleObjectList([new SimpleObject()]);
+        $test = new MutableSimpleObjectList([new SimpleObject('unmodified')]);
 
-        $test[] = new SimpleObject('valid');
+        $expected = new SimpleObject('modified');
+        $test[] = $expected;
 
-        self::assertEquals(new SimpleObject('valid'), $test[1]);
+        self::assertSame($expected, $test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
     {
         $test = new MutableSimpleObjectList([new SimpleObject('unmodified')]);
 
-        $test[0] = new SimpleObject('modified');
+        $expected = new SimpleObject('modified');
+        $test[0] = $expected;
 
-        self::assertEquals(new SimpleObject('modified'), $test[0]);
+        self::assertSame($expected, $test[0]);
     }
 }

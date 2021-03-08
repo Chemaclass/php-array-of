@@ -87,6 +87,6 @@ final class ImmutableStringListTest extends TestCase
     {
         $test = new ImmutableStringList(['test']);
 
-        self::assertEquals('test', $test[0]);
+        self::assertSame('test', $test[0]);
     }
 }

@@ -50,4 +50,5 @@ return PhpCsFixer\Config::create()
     'trim_array_spaces' => true,
     'void_return' => true,
     'php_unit_method_casing' => ['case' => 'snake_case'],
+    'php_unit_strict' => true,
   ]);

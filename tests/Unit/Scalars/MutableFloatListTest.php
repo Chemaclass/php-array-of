@@ -98,7 +98,7 @@ final class MutableFloatListTest extends TestCase
     {
         $test = new MutableFloatList([137.5]);
 
-        self::assertEquals(137.5, $test[0]);
+        self::assertSame(137.5, $test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
@@ -116,7 +116,7 @@ final class MutableFloatListTest extends TestCase
 
         $test[] = 8.1321;
 
-        self::assertEquals(8.1321, $test[1]);
+        self::assertSame(8.1321, $test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
@@ -125,6 +125,6 @@ final class MutableFloatListTest extends TestCase
 
         $test[0] = 0.508;
 
-        self::assertEquals(0.508, $test[0]);
+        self::assertSame(0.508, $test[0]);
     }
 }

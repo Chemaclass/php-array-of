@@ -98,7 +98,7 @@ final class MutableIntegerListTest extends TestCase
     {
         $test = new MutableIntegerList([2]);
 
-        self::assertEquals(2, $test[0]);
+        self::assertSame(2, $test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
@@ -116,7 +116,7 @@ final class MutableIntegerListTest extends TestCase
 
         $test[] = 13;
 
-        self::assertEquals(13, $test[1]);
+        self::assertSame(13, $test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
@@ -125,6 +125,6 @@ final class MutableIntegerListTest extends TestCase
 
         $test[0] = 34;
 
-        self::assertEquals(34, $test[0]);
+        self::assertSame(34, $test[0]);
     }
 }

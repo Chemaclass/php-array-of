@@ -87,6 +87,6 @@ final class ImmutableFloatListTest extends TestCase
     {
         $test = new ImmutableFloatList([137.5]);
 
-        self::assertEquals(137.5, $test[0]);
+        self::assertSame(137.5, $test[0]);
     }
 }

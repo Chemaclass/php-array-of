@@ -31,7 +31,7 @@ final class TypedArrayTest extends TestCase
 
         $test = (array) new MutableStringArray($input);
 
-        self::assertEquals(['key1', 'key2'], array_keys($test));
+        self::assertSame(['key1', 'key2'], array_keys($test));
     }
 
     public function test_invalid_scalar_enforcement_type(): void
@@ -71,8 +71,8 @@ final class TypedArrayTest extends TestCase
     {
         $test = new MutableStringArray(['test1', 'test2']);
 
-        self::assertEquals('test1', $test[0]);
-        self::assertEquals('test2', $test[1]);
+        self::assertSame('test1', $test[0]);
+        self::assertSame('test2', $test[1]);
         self::assertTrue(isset($test[0]));
         self::assertFalse(isset($test[100]));
 
