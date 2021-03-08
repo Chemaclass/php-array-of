@@ -184,6 +184,7 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardInstanceMap(array $input): void
     {
         if (
+            !empty($input) &&
             $this->collectionType() === self::COLLECTION_TYPE_MAP &&
             array_values($input) === $input
         ) {
