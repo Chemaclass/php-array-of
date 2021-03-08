@@ -33,7 +33,7 @@ final class Article
     }
 }
 
-final class TypedArrayArticles extends AbstractTypedArray
+final class ImmutableArticleList extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
@@ -51,16 +51,19 @@ final class TypedArrayArticles extends AbstractTypedArray
     }
 }
 
-function renderArticles(TypedArrayArticles $articles): void
+function renderArticles(ImmutableArticleList $articles): void
 {
     foreach ($articles as $article) {
         echo $article . PHP_EOL;
     }
 }
 
-$articles = new TypedArrayArticles([
+$articles = new ImmutableArticleList([
     new Article(1, 'article-1'),
     new Article(2, 'article-2'),
 ]);
 
 renderArticles($articles);
+
+//The list is immutable, this will thrown an exception!
+//$articles[] = new Article(3, 'article-3');

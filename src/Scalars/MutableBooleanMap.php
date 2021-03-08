@@ -6,10 +6,15 @@ namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class TypedArrayBoolean extends AbstractTypedArray
+final class MutableBooleanMap extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
         return self::SCALAR_BOOLEAN;
+    }
+
+    protected function collectionType(): string
+    {
+        return self::COLLECTION_TYPE_MAP;
     }
 }

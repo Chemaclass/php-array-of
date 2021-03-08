@@ -112,8 +112,8 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardChildTypeToEnforce(): void
     {
         if (
-            !$this->checkForValidClass() &&
-            !$this->checkForScalar()
+            !$this->checkForValidClass()
+            && !$this->checkForScalar()
         ) {
             throw InvalidSetupException::forEnforceType($this->typeToEnforce());
         }
@@ -171,8 +171,8 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardInstanceList(array $input): void
     {
         if (
-            $this->collectionType() === self::COLLECTION_TYPE_LIST &&
-            array_values($input) !== $input
+            $this->collectionType() === self::COLLECTION_TYPE_LIST
+            && array_values($input) !== $input
         ) {
             throw ListException::keysNotAllowed();
         }
@@ -184,8 +184,9 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardInstanceMap(array $input): void
     {
         if (
-            $this->collectionType() === self::COLLECTION_TYPE_MAP &&
-            array_values($input) === $input
+            !empty($input)
+            && $this->collectionType() === self::COLLECTION_TYPE_MAP
+            && array_values($input) === $input
         ) {
             throw MapException::keysRequired();
         }

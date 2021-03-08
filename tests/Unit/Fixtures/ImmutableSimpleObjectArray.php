@@ -6,7 +6,7 @@ namespace TypedArraysTest\Unit\Fixtures;
 
 use TypedArrays\AbstractTypedArray;
 
-final class ImmutableTypedArraySimpleObjects extends AbstractTypedArray
+final class ImmutableSimpleObjectArray extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {

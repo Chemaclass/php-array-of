@@ -9,26 +9,26 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayString;
+use TypedArrays\Scalars\MutableStringArray;
 
-final class TypedArrayStringTest extends TestCase
+final class MutableStringArrayTest extends TestCase
 {
-    public function testConstruct(): void
+    public function test_construct(): void
     {
-        $test = new TypedArrayString(['test']);
+        $test = new MutableStringArray(['test']);
 
-        self::assertInstanceOf(TypedArrayString::class, $test);
+        self::assertInstanceOf(MutableStringArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
      * @dataProvider providerInvalidScalarInputTypeOnInstantiate
      */
-    public function testInvalidScalarInputTypeOnInstantiate(array $arguments): void
+    public function test_invalid_scalar_input_type_on_instantiate(array $arguments): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayString($arguments);
+        new MutableStringArray($arguments);
     }
 
     /**
@@ -36,11 +36,11 @@ final class TypedArrayStringTest extends TestCase
      *
      * @param mixed $argument
      */
-    public function testInvalidScalarInputTypeOnAdd($argument): void
+    public function test_invalid_scalar_input_type_on_add($argument): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayString([]);
+        $test = new MutableStringArray([]);
         $test[] = $argument;
     }
 

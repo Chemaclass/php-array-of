@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit\Fixtures;
+namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class ListOfString extends AbstractTypedArray
+final class ImmutableBooleanList extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
-        return self::SCALAR_STRING;
+        return self::SCALAR_BOOLEAN;
+    }
+
+    protected function isMutable(): bool
+    {
+        return false;
     }
 
     protected function collectionType(): string

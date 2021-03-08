@@ -9,26 +9,26 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayBoolean;
+use TypedArrays\Scalars\MutableIntegerArray;
 
-final class TypedArrayBooleanTest extends TestCase
+final class MutableIntegerArrayTest extends TestCase
 {
-    public function testConstruct(): void
+    public function test_construct(): void
     {
-        $test = new TypedArrayBoolean([true]);
+        $test = new MutableIntegerArray([1]);
 
-        self::assertInstanceOf(TypedArrayBoolean::class, $test);
+        self::assertInstanceOf(MutableIntegerArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
      * @dataProvider providerInvalidScalarInputTypeOnInstantiate
      */
-    public function testInvalidScalarInputTypeOnInstantiate(array $arguments): void
+    public function test_invalid_scalar_input_type_on_instantiate(array $arguments): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayBoolean($arguments);
+        new MutableIntegerArray($arguments);
     }
 
     /**
@@ -36,22 +36,22 @@ final class TypedArrayBooleanTest extends TestCase
      *
      * @param mixed $argument
      */
-    public function testInvalidScalarInputTypeOnAdd($argument): void
+    public function test_invalid_scalar_input_type_on_add($argument): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayBoolean([]);
+        $test = new MutableIntegerArray([]);
         $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
-        yield 'Receiving integers' => [
-            'arguments' => [1, 2],
-        ];
-
         yield 'Receiving floats' => [
             'arguments' => [1.23, 4.56],
+        ];
+
+        yield 'Receiving booleans' => [
+            'arguments' => [true, false],
         ];
 
         yield 'Receiving stdClasses' => [
@@ -69,12 +69,12 @@ final class TypedArrayBooleanTest extends TestCase
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator
     {
-        yield 'Adding integer' => [
-            'argument' => 1,
-        ];
-
         yield 'Adding float' => [
             'argument' => 1.23,
+        ];
+
+        yield 'Adding boolean' => [
+            'argument' => true,
         ];
 
         yield 'Adding stdClass' => [

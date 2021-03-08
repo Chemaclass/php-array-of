@@ -9,26 +9,26 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayFloat;
+use TypedArrays\Scalars\MutableFloatArray;
 
-final class TypedArrayFloatTest extends TestCase
+final class MutableFloatArrayTest extends TestCase
 {
-    public function testConstruct(): void
+    public function test_construct(): void
     {
-        $test = new TypedArrayFloat([1.5]);
+        $test = new MutableFloatArray([1.5]);
 
-        self::assertInstanceOf(TypedArrayFloat::class, $test);
+        self::assertInstanceOf(MutableFloatArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
     /**
      * @dataProvider providerInvalidScalarInputTypeOnInstantiate
      */
-    public function testInvalidScalarInputTypeOnInstantiate(array $arguments): void
+    public function test_invalid_scalar_input_type_on_instantiate(array $arguments): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayFloat($arguments);
+        new MutableFloatArray($arguments);
     }
 
     /**
@@ -36,11 +36,11 @@ final class TypedArrayFloatTest extends TestCase
      *
      * @param mixed $argument
      */
-    public function testInvalidScalarInputTypeOnAdd($argument): void
+    public function test_invalid_scalar_input_type_on_add($argument): void
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayFloat([]);
+        $test = new MutableFloatArray([]);
         $test[] = $argument;
     }
 
