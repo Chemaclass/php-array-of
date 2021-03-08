@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit\Fixtures;
+namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class ImmutableTypedArraySimpleObjects extends AbstractTypedArray
+final class ImmutableFloatArray extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
-        return SimpleObject::class;
+        return self::SCALAR_DOUBLE;
     }
 
     protected function isMutable(): bool
