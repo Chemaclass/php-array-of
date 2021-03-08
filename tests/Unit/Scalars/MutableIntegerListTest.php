@@ -45,6 +45,47 @@ final class MutableIntegerListTest extends TestCase
         $test[] = $argument;
     }
 
+    public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
+    {
+        $this->expectExceptionObject(ListException::keysNotAllowed());
+
+        new MutableIntegerList(['invalid' => 1]);
+    }
+
+    public function test_list_constructor_does_not_throw_any_exception_when_keys_are_not_specified(): void
+    {
+        $test = new MutableIntegerList([2]);
+
+        self::assertSame(2, $test[0]);
+    }
+
+    public function test_list_setter_throws_an_exception_when_key_is_specified(): void
+    {
+        $test = new MutableIntegerList([3]);
+
+        $this->expectExceptionObject(ListException::keysNotAllowed());
+
+        $test['invalid'] = 5;
+    }
+
+    public function test_list_setter_does_not_throw_any_exception_when_key_is_not_specified(): void
+    {
+        $test = new MutableIntegerList([8]);
+
+        $test[] = 13;
+
+        self::assertSame(13, $test[1]);
+    }
+
+    public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
+    {
+        $test = new MutableIntegerList([21]);
+
+        $test[0] = 34;
+
+        self::assertSame(34, $test[0]);
+    }
+
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
         yield 'Receiving floats' => [
@@ -85,46 +126,5 @@ final class MutableIntegerListTest extends TestCase
         yield 'Adding string' => [
             'argument' => 'str1',
         ];
-    }
-
-    public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
-    {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
-
-        new MutableIntegerList(['invalid' => 1]);
-    }
-
-    public function test_list_constructor_does_not_throw_any_exception_when_keys_are_not_specified(): void
-    {
-        $test = new MutableIntegerList([2]);
-
-        self::assertSame(2, $test[0]);
-    }
-
-    public function test_list_setter_throws_an_exception_when_key_is_specified(): void
-    {
-        $test = new MutableIntegerList([3]);
-
-        $this->expectExceptionObject(ListException::keysNotAllowed());
-
-        $test['invalid'] = 5;
-    }
-
-    public function test_list_setter_does_not_throw_any_exception_when_key_is_not_specified(): void
-    {
-        $test = new MutableIntegerList([8]);
-
-        $test[] = 13;
-
-        self::assertSame(13, $test[1]);
-    }
-
-    public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
-    {
-        $test = new MutableIntegerList([21]);
-
-        $test[0] = 34;
-
-        self::assertSame(34, $test[0]);
     }
 }

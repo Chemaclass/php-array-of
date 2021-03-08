@@ -45,6 +45,45 @@ final class MutableFloatMapTest extends TestCase
         $test['invalid'] = $argument;
     }
 
+    public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
+    {
+        $this->expectExceptionObject(MapException::keysRequired());
+
+        new MutableFloatMap([1.3]);
+    }
+
+    public function test_map_constructor_does_not_throw_any_exception_when_keys_are_specified(): void
+    {
+        $test = new MutableFloatMap(['valid' => 0.1]);
+
+        self::assertSame(0.1, $test['valid']);
+    }
+
+    public function test_map_constructor_doest_not_throw_any_exception_when_empty_array_given(): void
+    {
+        $test = new MutableFloatMap([]);
+
+        self::assertEmpty((array) $test);
+    }
+
+    public function test_map_setter_throws_an_exception_when_key_is_not_specified(): void
+    {
+        $test = new MutableFloatMap(['valid' => 4.1]);
+
+        $this->expectExceptionObject(MapException::keysRequired());
+
+        $test[] = 4.2;
+    }
+
+    public function test_map_setter_does_not_throw_any_exception_when_key_is_specified(): void
+    {
+        $test = new MutableFloatMap(['key' => 1.3]);
+
+        $test['valid'] = 5.6;
+
+        self::assertSame(5.6, $test['valid']);
+    }
+
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
         yield 'Receiving integers' => [
@@ -85,44 +124,5 @@ final class MutableFloatMapTest extends TestCase
         yield 'Adding string' => [
             'argument' => 'str1',
         ];
-    }
-
-    public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
-    {
-        $this->expectExceptionObject(MapException::keysRequired());
-
-        new MutableFloatMap([1.3]);
-    }
-
-    public function test_map_constructor_does_not_throw_any_exception_when_keys_are_specified(): void
-    {
-        $test = new MutableFloatMap(['valid' => 0.1]);
-
-        self::assertSame(0.1, $test['valid']);
-    }
-
-    public function test_map_constructor_doest_not_throw_any_exception_when_empty_array_given(): void
-    {
-        $test = new MutableFloatMap([]);
-
-        self::assertEmpty((array) $test);
-    }
-
-    public function test_map_setter_throws_an_exception_when_key_is_not_specified(): void
-    {
-        $test = new MutableFloatMap(['valid' => 4.1]);
-
-        $this->expectExceptionObject(MapException::keysRequired());
-
-        $test[] = 4.2;
-    }
-
-    public function test_map_setter_does_not_throw_any_exception_when_key_is_specified(): void
-    {
-        $test = new MutableFloatMap(['key' => 1.3]);
-
-        $test['valid'] = 5.6;
-
-        self::assertSame(5.6, $test['valid']);
     }
 }

@@ -32,6 +32,26 @@ final class ImmutableBooleanArrayTest extends TestCase
         new ImmutableBooleanArray($arguments);
     }
 
+    public function test_immutability_of_set(): void
+    {
+        $test = new ImmutableBooleanArray([true]);
+
+        $this->expectException(ImmutabilityException::class);
+        $this->expectExceptionMessage('This TypedArray object is immutable.');
+
+        $test[] = false;
+    }
+
+    public function test_immutability_of_unset(): void
+    {
+        $test = new ImmutableBooleanArray([false]);
+
+        $this->expectException(ImmutabilityException::class);
+        $this->expectExceptionMessage('This TypedArray object is immutable.');
+
+        unset($test[0]);
+    }
+
     public function providerInvalidScalarInputType(): Generator
     {
         yield 'Receiving integers' => [
@@ -53,25 +73,5 @@ final class ImmutableBooleanArrayTest extends TestCase
         yield 'Receiving a mix of all scalars' => [
             'arguments' => [true, 1, 2.3, 'string', new stdClass()],
         ];
-    }
-
-    public function test_immutability_of_set(): void
-    {
-        $test = new ImmutableBooleanArray([true]);
-
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
-
-        $test[] = false;
-    }
-
-    public function test_immutability_of_unset(): void
-    {
-        $test = new ImmutableBooleanArray([false]);
-
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
-
-        unset($test[0]);
     }
 }
