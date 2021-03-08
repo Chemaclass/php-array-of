@@ -87,7 +87,7 @@ final class ImmutableBooleanMapTest extends TestCase
     {
         $test = new ImmutableBooleanMap(['valid' => true]);
 
-        self::assertSame(true, $test['valid']);
+        self::assertTrue($test['valid']);
     }
 
     public function test_map_constructor_doest_not_throw_any_exception_when_empty_array_given(): void

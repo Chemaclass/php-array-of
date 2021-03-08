@@ -98,7 +98,7 @@ final class MutableBooleanMapTest extends TestCase
     {
         $test = new MutableBooleanMap(['valid' => true]);
 
-        self::assertSame(true, $test['valid']);
+        self::assertTrue($test['valid']);
     }
 
     public function test_map_constructor_doest_not_throw_any_exception_when_empty_array_given(): void
@@ -123,6 +123,6 @@ final class MutableBooleanMapTest extends TestCase
 
         $test['valid'] = true;
 
-        self::assertSame(true, $test['valid']);
+        self::assertTrue($test['valid']);
     }
 }

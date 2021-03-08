@@ -98,7 +98,7 @@ final class MutableBooleanListTest extends TestCase
     {
         $test = new MutableBooleanList([true]);
 
-        self::assertSame(true, $test[0]);
+        self::assertTrue($test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
@@ -116,7 +116,7 @@ final class MutableBooleanListTest extends TestCase
 
         $test[] = true;
 
-        self::assertSame(true, $test[1]);
+        self::assertTrue($test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
@@ -125,6 +125,6 @@ final class MutableBooleanListTest extends TestCase
 
         $test[0] = true;
 
-        self::assertSame(true, $test[0]);
+        self::assertTrue($test[0]);
     }
 }

@@ -87,6 +87,6 @@ final class ImmutableBooleanListTest extends TestCase
     {
         $test = new ImmutableBooleanList([true]);
 
-        self::assertSame(true, $test[0]);
+        self::assertTrue($test[0]);
     }
 }
