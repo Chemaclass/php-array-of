@@ -48,8 +48,6 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @param mixed[] $input
-     *
      * @throws InvalidSetupException
      * @throws InvalidTypeException
      * @throws ListException
@@ -133,8 +131,6 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @param array $input
-     *
      * @throws InvalidTypeException
      */
     private function guardInstanceTypeToEnforce(array $input): void
@@ -148,8 +144,6 @@ abstract class AbstractTypedArray extends ArrayObject
 
     /**
      * @param mixed $variable
-     *
-     * @return bool
      */
     private function checkType($variable): bool
     {
@@ -163,8 +157,6 @@ abstract class AbstractTypedArray extends ArrayObject
 
     /**
      * @param mixed $variable
-     *
-     * @return string
      */
     private static function getType($variable): string
     {
@@ -174,8 +166,6 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @param mixed[] $input
-     *
      * @throws ListException
      */
     private function guardInstanceList(array $input): void
@@ -189,8 +179,6 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @param mixed[] $input
-     *
      * @throws MapException
      */
     private function guardInstanceMap(array $input): void
