@@ -9,15 +9,15 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayString;
+use TypedArrays\Scalars\MutableBooleanArray;
 
-final class TypedArrayStringTest extends TestCase
+final class MutableBooleanArrayTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new TypedArrayString(['test']);
+        $test = new MutableBooleanArray([true]);
 
-        self::assertInstanceOf(TypedArrayString::class, $test);
+        self::assertInstanceOf(MutableBooleanArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
@@ -28,7 +28,7 @@ final class TypedArrayStringTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayString($arguments);
+        new MutableBooleanArray($arguments);
     }
 
     /**
@@ -40,7 +40,7 @@ final class TypedArrayStringTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayString([]);
+        $test = new MutableBooleanArray([]);
         $test[] = $argument;
     }
 
@@ -54,12 +54,12 @@ final class TypedArrayStringTest extends TestCase
             'arguments' => [1.23, 4.56],
         ];
 
-        yield 'Receiving booleans' => [
-            'arguments' => [true, false],
-        ];
-
         yield 'Receiving stdClasses' => [
             'arguments' => [new stdClass(), new stdClass()],
+        ];
+
+        yield 'Receiving strings' => [
+            'arguments' => ['str1', 'str2'],
         ];
 
         yield 'Receiving a mix of all scalars' => [
@@ -77,12 +77,12 @@ final class TypedArrayStringTest extends TestCase
             'argument' => 1.23,
         ];
 
-        yield 'Adding boolean' => [
-            'argument' => true,
-        ];
-
         yield 'Adding stdClass' => [
             'argument' => new stdClass(),
+        ];
+
+        yield 'Adding string' => [
+            'argument' => 'str1',
         ];
     }
 }

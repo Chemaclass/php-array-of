@@ -9,15 +9,15 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayFloat;
+use TypedArrays\Scalars\MutableIntegerArray;
 
-final class TypedArrayFloatTest extends TestCase
+final class MutableIntegerArrayTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new TypedArrayFloat([1.5]);
+        $test = new MutableIntegerArray([1]);
 
-        self::assertInstanceOf(TypedArrayFloat::class, $test);
+        self::assertInstanceOf(MutableIntegerArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
@@ -28,7 +28,7 @@ final class TypedArrayFloatTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayFloat($arguments);
+        new MutableIntegerArray($arguments);
     }
 
     /**
@@ -40,14 +40,14 @@ final class TypedArrayFloatTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayFloat([]);
+        $test = new MutableIntegerArray([]);
         $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
-        yield 'Receiving integers' => [
-            'arguments' => [1, 2],
+        yield 'Receiving floats' => [
+            'arguments' => [1.23, 4.56],
         ];
 
         yield 'Receiving booleans' => [
@@ -69,8 +69,8 @@ final class TypedArrayFloatTest extends TestCase
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator
     {
-        yield 'Adding integer' => [
-            'argument' => 1,
+        yield 'Adding float' => [
+            'argument' => 1.23,
         ];
 
         yield 'Adding boolean' => [

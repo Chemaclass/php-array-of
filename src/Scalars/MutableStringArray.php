@@ -6,10 +6,10 @@ namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class TypedArrayInteger extends AbstractTypedArray
+final class MutableStringArray extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
-        return self::SCALAR_INTEGER;
+        return self::SCALAR_STRING;
     }
 }

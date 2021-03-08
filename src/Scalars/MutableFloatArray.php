@@ -6,10 +6,10 @@ namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class TypedArrayBoolean extends AbstractTypedArray
+final class MutableFloatArray extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
-        return self::SCALAR_BOOLEAN;
+        return self::SCALAR_DOUBLE;
     }
 }

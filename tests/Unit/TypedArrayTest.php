@@ -7,7 +7,7 @@ namespace TypedArraysTest\Unit;
 use PHPUnit\Framework\TestCase;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidSetupException;
-use TypedArrays\Scalars\TypedArrayString;
+use TypedArrays\Scalars\MutableStringArray;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
 
@@ -15,7 +15,7 @@ final class TypedArrayTest extends TestCase
 {
     public function testValidEnforcementTypes(): void
     {
-        $validScalar = new TypedArrayString();
+        $validScalar = new MutableStringArray();
         self::assertInstanceOf(AbstractTypedArray::class, $validScalar);
 
         $validClass = new TypedArraySimpleObjects();
@@ -29,7 +29,7 @@ final class TypedArrayTest extends TestCase
             'key2' => 'value2',
         ];
 
-        $test = (array) new TypedArrayString($input);
+        $test = (array) new MutableStringArray($input);
 
         self::assertEquals(['key1', 'key2'], array_keys($test));
     }
@@ -60,7 +60,7 @@ final class TypedArrayTest extends TestCase
 
     public function testValidInputTypes(): void
     {
-        $scalars = new TypedArrayString(['test', 'test-again']);
+        $scalars = new MutableStringArray(['test', 'test-again']);
         self::assertInstanceOf(AbstractTypedArray::class, $scalars);
 
         $classes = new TypedArraySimpleObjects([new SimpleObject(), new SimpleObject()]);
@@ -69,7 +69,7 @@ final class TypedArrayTest extends TestCase
 
     public function testCanUseAsArray(): void
     {
-        $test = new TypedArrayString(['test1', 'test2']);
+        $test = new MutableStringArray(['test1', 'test2']);
 
         self::assertEquals('test1', $test[0]);
         self::assertEquals('test2', $test[1]);

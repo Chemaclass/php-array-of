@@ -9,15 +9,15 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayBoolean;
+use TypedArrays\Scalars\MutableFloatArray;
 
-final class TypedArrayBooleanTest extends TestCase
+final class MutableFloatArrayTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new TypedArrayBoolean([true]);
+        $test = new MutableFloatArray([1.5]);
 
-        self::assertInstanceOf(TypedArrayBoolean::class, $test);
+        self::assertInstanceOf(MutableFloatArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
@@ -28,7 +28,7 @@ final class TypedArrayBooleanTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayBoolean($arguments);
+        new MutableFloatArray($arguments);
     }
 
     /**
@@ -40,7 +40,7 @@ final class TypedArrayBooleanTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayBoolean([]);
+        $test = new MutableFloatArray([]);
         $test[] = $argument;
     }
 
@@ -50,8 +50,8 @@ final class TypedArrayBooleanTest extends TestCase
             'arguments' => [1, 2],
         ];
 
-        yield 'Receiving floats' => [
-            'arguments' => [1.23, 4.56],
+        yield 'Receiving booleans' => [
+            'arguments' => [true, false],
         ];
 
         yield 'Receiving stdClasses' => [
@@ -73,8 +73,8 @@ final class TypedArrayBooleanTest extends TestCase
             'argument' => 1,
         ];
 
-        yield 'Adding float' => [
-            'argument' => 1.23,
+        yield 'Adding boolean' => [
+            'argument' => true,
         ];
 
         yield 'Adding stdClass' => [

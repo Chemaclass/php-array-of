@@ -9,15 +9,15 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\TypedArrayInteger;
+use TypedArrays\Scalars\MutableStringArray;
 
-final class TypedArrayIntegerTest extends TestCase
+final class MutableStringArrayTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $test = new TypedArrayInteger([1]);
+        $test = new MutableStringArray(['test']);
 
-        self::assertInstanceOf(TypedArrayInteger::class, $test);
+        self::assertInstanceOf(MutableStringArray::class, $test);
         self::assertInstanceOf(AbstractTypedArray::class, $test);
     }
 
@@ -28,7 +28,7 @@ final class TypedArrayIntegerTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        new TypedArrayInteger($arguments);
+        new MutableStringArray($arguments);
     }
 
     /**
@@ -40,12 +40,16 @@ final class TypedArrayIntegerTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $test = new TypedArrayInteger([]);
+        $test = new MutableStringArray([]);
         $test[] = $argument;
     }
 
     public function providerInvalidScalarInputTypeOnInstantiate(): Generator
     {
+        yield 'Receiving integers' => [
+            'arguments' => [1, 2],
+        ];
+
         yield 'Receiving floats' => [
             'arguments' => [1.23, 4.56],
         ];
@@ -58,10 +62,6 @@ final class TypedArrayIntegerTest extends TestCase
             'arguments' => [new stdClass(), new stdClass()],
         ];
 
-        yield 'Receiving strings' => [
-            'arguments' => ['str1', 'str2'],
-        ];
-
         yield 'Receiving a mix of all scalars' => [
             'arguments' => [true, 1, 2.3, 'string', new stdClass()],
         ];
@@ -69,6 +69,10 @@ final class TypedArrayIntegerTest extends TestCase
 
     public function providerInvalidScalarInputTypeOnAdd(): Generator
     {
+        yield 'Adding integer' => [
+            'argument' => 1,
+        ];
+
         yield 'Adding float' => [
             'argument' => 1.23,
         ];
@@ -79,10 +83,6 @@ final class TypedArrayIntegerTest extends TestCase
 
         yield 'Adding stdClass' => [
             'argument' => new stdClass(),
-        ];
-
-        yield 'Adding string' => [
-            'argument' => 'str1',
         ];
     }
 }
