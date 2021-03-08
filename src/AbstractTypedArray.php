@@ -9,6 +9,7 @@ use TypedArrays\Exceptions\ImmutabilityException;
 use TypedArrays\Exceptions\InvalidSetupException;
 use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Exceptions\ListException;
+use TypedArrays\Exceptions\MapException;
 
 abstract class AbstractTypedArray extends ArrayObject
 {
@@ -47,43 +48,75 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @param mixed[] $input
-     *
      * @throws InvalidSetupException
      * @throws InvalidTypeException
      * @throws ListException
+     * @throws MapException
      */
     public function __construct(array $input = [])
     {
-        if (!$this->checkCollectionType()) {
-            throw InvalidSetupException::forCollectionType($this->collectionType());
-        }
+        $this->guardChildCollectionType();
+        $this->guardChildTypeToEnforce();
 
-        if (!$this->checkTypeToEnforce()) {
-            throw InvalidSetupException::forEnforceType($this->typeToEnforce());
-        }
-
-        if ($this->collectionType() === self::COLLECTION_TYPE_LIST) {
-            self::checkForAssociative($input);
-        }
-
-        $this->guardEnforceType($input);
+        $this->guardInstanceTypeToEnforce($input);
+        $this->guardInstanceList($input);
+        $this->guardInstanceMap($input);
 
         parent::__construct($input);
     }
 
-    private function checkTypeToEnforce(): bool
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     *
+     * @throws InvalidTypeException
+     * @throws ImmutabilityException
+     * @throws ListException
+     * @throws MapException
+     */
+    public function offsetSet($key, $value): void
     {
-        if ($this->checkForValidClass()) {
-            return true;
-        }
+        $this->guardMutability();
+        $this->guardOffsetSetList($key);
+        $this->guardOffsetSetMap($key);
+        $this->guardOffsetSetType($value);
 
-        return $this->checkForScalar();
+        parent::offsetSet($key, $value);
     }
 
-    private function checkCollectionType(): bool
+    /**
+     * @param mixed $key
+     *
+     * @throws ImmutabilityException
+     */
+    public function offsetUnset($key): void
     {
-        return in_array($this->collectionType(), self::POSSIBLE_COLLECTION_TYPES);
+        $this->guardMutability();
+
+        parent::offsetUnset($key);
+    }
+
+    /**
+     * @throws InvalidTypeException
+     */
+    private function guardChildCollectionType(): void
+    {
+        if (!in_array($this->collectionType(), self::POSSIBLE_COLLECTION_TYPES)) {
+            throw InvalidSetupException::forCollectionType($this->collectionType());
+        }
+    }
+
+    /**
+     * @throws InvalidSetupException
+     */
+    private function guardChildTypeToEnforce(): void
+    {
+        if (
+            !$this->checkForValidClass() &&
+            !$this->checkForScalar()
+        ) {
+            throw InvalidSetupException::forEnforceType($this->typeToEnforce());
+        }
     }
 
     private function checkForValidClass(): bool
@@ -97,7 +130,10 @@ abstract class AbstractTypedArray extends ArrayObject
         return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
     }
 
-    private function guardEnforceType(array $input): void
+    /**
+     * @throws InvalidTypeException
+     */
+    private function guardInstanceTypeToEnforce(array $input): void
     {
         array_map(function ($item): void {
             if (!$this->checkType($item)) {
@@ -130,63 +166,81 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
+     * @throws ListException
+     */
+    private function guardInstanceList(array $input): void
+    {
+        if (
+            $this->collectionType() === self::COLLECTION_TYPE_LIST &&
+            array_values($input) !== $input
+        ) {
+            throw ListException::keysNotAllowed();
+        }
+    }
+
+    /**
+     * @throws MapException
+     */
+    private function guardInstanceMap(array $input): void
+    {
+        if (
+            $this->collectionType() === self::COLLECTION_TYPE_MAP &&
+            array_values($input) === $input
+        ) {
+            throw MapException::keysRequired();
+        }
+    }
+
+    /**
+     * @throws ImmutabilityException
+     */
+    private function guardMutability(): void
+    {
+        if (!$this->isMutable()) {
+            throw new ImmutabilityException();
+        }
+    }
+
+    /**
      * @param mixed $key
+     *
+     * @throws ListException
+     */
+    private function guardOffsetSetList($key): void
+    {
+        if (
+            isset($key)
+            && $this->collectionType() === self::COLLECTION_TYPE_LIST
+            && !isset($this[$key])
+        ) {
+            throw ListException::keysNotAllowed();
+        }
+    }
+
+    /**
+     * @param mixed $key
+     *
+     * @throws MapException
+     */
+    private function guardOffsetSetMap($key): void
+    {
+        if (
+            !isset($key)
+            && $this->collectionType() === self::COLLECTION_TYPE_MAP
+        ) {
+            throw MapException::keysRequired();
+        }
+    }
+
+    /**
      * @param mixed $value
      *
      * @throws InvalidTypeException
-     * @throws ImmutabilityException
-     * @throws ListException
      */
-    public function offsetSet($key, $value): void
+    private function guardOffsetSetType($value): void
     {
-        if (!$this->isMutable()) {
-            throw new ImmutabilityException();
-        }
-
-        if ($this->canOffsetSet($key)) {
-            throw ListException::keysNotAllowed();
-        }
-
         if (!$this->checkType($value)) {
             throw InvalidTypeException::onAdd(static::class, static::getType($value), $this->typeToEnforce());
-        }
-
-        parent::offsetSet($key, $value);
-    }
-
-    /**
-     * @param mixed $key
-     */
-    private function canOffsetSet($key): bool
-    {
-        return isset($key)
-            && $this->collectionType() === self::COLLECTION_TYPE_LIST
-            && !isset($this[$key]);
-    }
-
-    /**
-     * @param mixed $key
-     *
-     * @throws ImmutabilityException
-     */
-    public function offsetUnset($key): void
-    {
-        if (!$this->isMutable()) {
-            throw new ImmutabilityException();
-        }
-
-        parent::offsetUnset($key);
-    }
-
-    /**
-     * @param mixed[] $input
-     *
-     * @throws ListException
-     */
-    private static function checkForAssociative(array $input): void
-    {
-        if (array_values($input) !== $input) {
-            throw ListException::keysNotAllowed();
         }
     }
 }
