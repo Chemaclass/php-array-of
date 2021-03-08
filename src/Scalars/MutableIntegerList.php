@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit\Fixtures;
+namespace TypedArrays\Scalars;
 
 use TypedArrays\AbstractTypedArray;
 
-final class ListOfString extends AbstractTypedArray
+final class MutableIntegerList extends AbstractTypedArray
 {
     protected function typeToEnforce(): string
     {
-        return self::SCALAR_STRING;
+        return self::SCALAR_INTEGER;
     }
 
     protected function collectionType(): string

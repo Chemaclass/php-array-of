@@ -6,7 +6,8 @@ namespace TypedArraysTest\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\Exceptions\ListException;
-use TypedArraysTest\Unit\Fixtures\ListOfString;
+use TypedArraysTest\Unit\Fixtures\MutableSimpleObjectList;
+use TypedArraysTest\Unit\Fixtures\SimpleObject;
 
 final class ListTest extends TestCase
 {
@@ -14,40 +15,40 @@ final class ListTest extends TestCase
     {
         $this->expectExceptionObject(ListException::keysNotAllowed());
 
-        new ListOfString(['invalid' => 'test']);
+        new MutableSimpleObjectList(['invalid' => new SimpleObject()]);
     }
 
     public function test_list_constructor_does_not_throw_any_exception_when_keys_are_not_specified(): void
     {
-        $test = new ListOfString(['valid', 'test']);
+        $test = new MutableSimpleObjectList([new SimpleObject('valid')]);
 
-        self::assertEquals('valid', $test[0]);
+        self::assertEquals(new SimpleObject('valid'), $test[0]);
     }
 
     public function test_list_setter_throws_an_exception_when_key_is_specified(): void
     {
-        $test = new ListOfString(['test']);
+        $test = new MutableSimpleObjectList([new SimpleObject()]);
 
         $this->expectExceptionObject(ListException::keysNotAllowed());
 
-        $test['key'] = 'invalid';
+        $test['invalid'] = new SimpleObject();
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_key_is_not_specified(): void
     {
-        $test = new ListOfString(['test']);
+        $test = new MutableSimpleObjectList([new SimpleObject()]);
 
-        $test[] = 'valid';
+        $test[] = new SimpleObject('valid');
 
-        self::assertEquals('valid', $test[1]);
+        self::assertEquals(new SimpleObject('valid'), $test[1]);
     }
 
     public function test_list_setter_does_not_throw_any_exception_when_an_element_is_modified_by_key(): void
     {
-        $test = new ListOfString(['unmodified']);
+        $test = new MutableSimpleObjectList([new SimpleObject('unmodified')]);
 
-        $test[0] = 'modified';
+        $test[0] = new SimpleObject('modified');
 
-        self::assertEquals('modified', $test[0]);
+        self::assertEquals(new SimpleObject('modified'), $test[0]);
     }
 }
