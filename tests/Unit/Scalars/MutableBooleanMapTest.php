@@ -32,6 +32,29 @@ final class MutableBooleanMapTest extends TestCase
         new MutableBooleanMap($arguments);
     }
 
+    public function providerInvalidScalarInputTypeOnInstantiate(): Generator
+    {
+        yield 'Receiving integers' => [
+            'arguments' => ['key1' => 1, 'key2' => 2],
+        ];
+
+        yield 'Receiving floats' => [
+            'arguments' => ['key1' => 1.23, 'key2' => 4.56],
+        ];
+
+        yield 'Receiving stdClasses' => [
+            'arguments' => ['key1' => new stdClass(), 'key2' => new stdClass()],
+        ];
+
+        yield 'Receiving strings' => [
+            'arguments' => ['key1' => 'str1', 'key2' => 'str2'],
+        ];
+
+        yield 'Receiving a mix of all scalars' => [
+            'arguments' => ['key1' => true, 'key2' => 1, 'key3' => 2.3, 'key4' => 'string', 'key5' => new stdClass()],
+        ];
+    }
+
     /**
      * @dataProvider providerInvalidScalarInputTypeOnAdd
      *
@@ -43,6 +66,25 @@ final class MutableBooleanMapTest extends TestCase
 
         $test = new MutableBooleanMap([]);
         $test['invalid'] = $argument;
+    }
+
+    public function providerInvalidScalarInputTypeOnAdd(): Generator
+    {
+        yield 'Adding integer' => [
+            'argument' => 1,
+        ];
+
+        yield 'Adding float' => [
+            'argument' => 1.23,
+        ];
+
+        yield 'Adding stdClass' => [
+            'argument' => new stdClass(),
+        ];
+
+        yield 'Adding string' => [
+            'argument' => 'str1',
+        ];
     }
 
     public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
@@ -82,47 +124,5 @@ final class MutableBooleanMapTest extends TestCase
         $test['valid'] = true;
 
         self::assertTrue($test['valid']);
-    }
-
-    public function providerInvalidScalarInputTypeOnInstantiate(): Generator
-    {
-        yield 'Receiving integers' => [
-            'arguments' => ['key1' => 1, 'key2' => 2],
-        ];
-
-        yield 'Receiving floats' => [
-            'arguments' => ['key1' => 1.23, 'key2' => 4.56],
-        ];
-
-        yield 'Receiving stdClasses' => [
-            'arguments' => ['key1' => new stdClass(), 'key2' => new stdClass()],
-        ];
-
-        yield 'Receiving strings' => [
-            'arguments' => ['key1' => 'str1', 'key2' => 'str2'],
-        ];
-
-        yield 'Receiving a mix of all scalars' => [
-            'arguments' => ['key1' => true, 'key2' => 1, 'key3' => 2.3, 'key4' => 'string', 'key5' => new stdClass()],
-        ];
-    }
-
-    public function providerInvalidScalarInputTypeOnAdd(): Generator
-    {
-        yield 'Adding integer' => [
-            'argument' => 1,
-        ];
-
-        yield 'Adding float' => [
-            'argument' => 1.23,
-        ];
-
-        yield 'Adding stdClass' => [
-            'argument' => new stdClass(),
-        ];
-
-        yield 'Adding string' => [
-            'argument' => 'str1',
-        ];
     }
 }

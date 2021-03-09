@@ -33,6 +33,29 @@ final class ImmutableIntegerListTest extends TestCase
         new ImmutableIntegerList($arguments);
     }
 
+    public function providerInvalidScalarInputType(): Generator
+    {
+        yield 'Receiving floats' => [
+            'arguments' => [1.23, 4.56],
+        ];
+
+        yield 'Receiving booleans' => [
+            'arguments' => [true, false],
+        ];
+
+        yield 'Receiving stdClasses' => [
+            'arguments' => [new stdClass(), new stdClass()],
+        ];
+
+        yield 'Receiving strings' => [
+            'arguments' => ['str1', 'str2'],
+        ];
+
+        yield 'Receiving a mix of all scalars' => [
+            'arguments' => [true, 1, 2.3, 'string', new stdClass()],
+        ];
+    }
+
     public function test_immutability_of_set(): void
     {
         $test = new ImmutableIntegerList([1337]);
@@ -65,28 +88,5 @@ final class ImmutableIntegerListTest extends TestCase
         $test = new ImmutableIntegerList([2]);
 
         self::assertSame(2, $test[0]);
-    }
-
-    public function providerInvalidScalarInputType(): Generator
-    {
-        yield 'Receiving floats' => [
-            'arguments' => [1.23, 4.56],
-        ];
-
-        yield 'Receiving booleans' => [
-            'arguments' => [true, false],
-        ];
-
-        yield 'Receiving stdClasses' => [
-            'arguments' => [new stdClass(), new stdClass()],
-        ];
-
-        yield 'Receiving strings' => [
-            'arguments' => ['str1', 'str2'],
-        ];
-
-        yield 'Receiving a mix of all scalars' => [
-            'arguments' => [true, 1, 2.3, 'string', new stdClass()],
-        ];
     }
 }

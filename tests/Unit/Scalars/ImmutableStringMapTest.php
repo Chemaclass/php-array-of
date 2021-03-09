@@ -33,6 +33,29 @@ final class ImmutableStringMapTest extends TestCase
         new ImmutableStringMap($arguments);
     }
 
+    public function providerInvalidScalarInputType(): Generator
+    {
+        yield 'Receiving integers' => [
+            'arguments' => ['key1' => 1, 'key2' => 2],
+        ];
+
+        yield 'Receiving floats' => [
+            'arguments' => ['key1' => 1.23, 'key2' => 4.56],
+        ];
+
+        yield 'Receiving booleans' => [
+            'arguments' => ['key1' => true, 'key2' => false],
+        ];
+
+        yield 'Receiving stdClasses' => [
+            'arguments' => ['key1' => new stdClass(), 'key2' => new stdClass()],
+        ];
+
+        yield 'Receiving a mix of all scalars' => [
+            'arguments' => ['key1' => true, 'key2' => 1, 'key3' => 2.3, 'key4' => 'string', 'key5' => new stdClass()],
+        ];
+    }
+
     public function test_immutability_of_set(): void
     {
         $test = new ImmutableStringMap(['key' => 'test']);
@@ -72,28 +95,5 @@ final class ImmutableStringMapTest extends TestCase
         $test = new ImmutableStringMap([]);
 
         self::assertEmpty((array) $test);
-    }
-
-    public function providerInvalidScalarInputType(): Generator
-    {
-        yield 'Receiving integers' => [
-            'arguments' => ['key1' => 1, 'key2' => 2],
-        ];
-
-        yield 'Receiving floats' => [
-            'arguments' => ['key1' => 1.23, 'key2' => 4.56],
-        ];
-
-        yield 'Receiving booleans' => [
-            'arguments' => ['key1' => true, 'key2' => false],
-        ];
-
-        yield 'Receiving stdClasses' => [
-            'arguments' => ['key1' => new stdClass(), 'key2' => new stdClass()],
-        ];
-
-        yield 'Receiving a mix of all scalars' => [
-            'arguments' => ['key1' => true, 'key2' => 1, 'key3' => 2.3, 'key4' => 'string', 'key5' => new stdClass()],
-        ];
     }
 }
