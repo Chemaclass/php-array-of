@@ -72,6 +72,14 @@ protected function typeToEnforce(): string
 There are different kinds of collections.
 In this library you can find up to three different types: `array`, `map` and `list`.
 
+By default, the collections are array, but you can specify the collection type by overriding this function in your domain:
+```php
+protected function collectionType(): string
+{
+    return self::COLLECTION_TYPE_ARRAY;
+}
+```
+
 ### Array
 
 `const COLLECTION_TYPE_ARRAY = 'array'`
@@ -95,14 +103,6 @@ In this library you can find up to three different types: `array`, `map` and `li
 - An ordered collection (also known as a sequence). 
 - The user of this interface has precise control over where in the list each element is inserted. 
 - The user can access elements by their integer index (position in the list).
-
-You can specify the collection type by overriding this function in your domain:
-```php
-protected function collectionType(): string
-{
-    return self::COLLECTION_TYPE_ARRAY;
-}
-```
 
 ## Immutability
 
