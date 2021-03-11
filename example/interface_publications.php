@@ -9,6 +9,7 @@ require getcwd() . '/vendor/autoload.php';
 interface InterfacePublication
 {
     public function getPublicationName(): string;
+
     public function getPublicationUrl(): string;
 }
 
@@ -88,7 +89,11 @@ function renderPublicationList(PublicationList $publications): void
 {
     print '<ul>' . PHP_EOL;
     foreach ($publications as $publication) {
-        print "<li><a href=\"{$publication->getPublicationUrl()}\">{$publication->getPublicationName()}</a></li>" . PHP_EOL;
+        print sprintf(
+            '  <li><a href="%s">%s</a></li>' . PHP_EOL,
+            $publication->getPublicationUrl(),
+            $publication->getPublicationName()
+        );
     }
     print '</ul>' . PHP_EOL;
 }
