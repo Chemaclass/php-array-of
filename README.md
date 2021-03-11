@@ -120,38 +120,48 @@ protected function isMutable(): bool
 
 If you only need a string map, or a list of integers, this library already contains all possible scalar combinations for:
 
-| Class                 | Scalar  | Mutable | Type  |
+| Class                 | Mutable | Scalar  | Type  |
 |-----------------------|---------|---------|-------|
-| ImmutableBooleanArray | boolean | no      | array |
-| ImmutableBooleanList  | boolean | no      | list  |
-| ImmutableBooleanMap   | boolean | no      | map   |
-| ImmutableFloatArray   | float   | no      | array |
-| ImmutableFloatList    | float   | no      | list  |
-| ImmutableFloatMap     | float   | no      | map   |
-| ImmutableIntegerArray | integer | no      | array |
-| ImmutableIntegerList  | integer | no      | list  |
-| ImmutableIntegerMap   | integer | no      | map   |
-| ImmutableStringArray  | string  | no      | array |
-| ImmutableStringList   | string  | no      | list  |
-| ImmutableStringMap    | string  | no      | map   |
-| MutableBooleanArray   | boolean | yes     | array |
-| MutableBooleanList    | boolean | yes     | list  |
-| MutableBooleanMap     | boolean | yes     | map   |
-| MutableFloatArray     | float   | yes     | array |
-| MutableFloatList      | float   | yes     | list  |
-| MutableFloatMap       | float   | yes     | map   |
-| MutableIntegerArray   | integer | yes     | array |
-| MutableIntegerList    | integer | yes     | list  |
-| MutableIntegerMap     | integer | yes     | map   |
-| MutableStringArray    | string  | yes     | array |
-| MutableStringList     | string  | yes     | list  |
-| MutableStringMap      | string  | yes     | map   |
+| ImmutableBooleanArray | no      | boolean | array |
+| ImmutableBooleanList  | no      | boolean | list  |
+| ImmutableBooleanMap   | no      | boolean | map   |
+| ImmutableFloatArray   | no      | float   | array |
+| ImmutableFloatList    | no      | float   | list  |
+| ImmutableFloatMap     | no      | float   | map   |
+| ImmutableIntegerArray | no      | integer | array |
+| ImmutableIntegerList  | no      | integer | list  |
+| ImmutableIntegerMap   | no      | integer | map   |
+| ImmutableStringArray  | no      | string  | array |
+| ImmutableStringList   | no      | string  | list  |
+| ImmutableStringMap    | no      | string  | map   |
+| MutableBooleanArray   | yes     | boolean | array |
+| MutableBooleanList    | yes     | boolean | list  |
+| MutableBooleanMap     | yes     | boolean | map   |
+| MutableFloatArray     | yes     | float   | array |
+| MutableFloatList      | yes     | float   | list  |
+| MutableFloatMap       | yes     | float   | map   |
+| MutableIntegerArray   | yes     | integer | array |
+| MutableIntegerList    | yes     | integer | list  |
+| MutableIntegerMap     | yes     | integer | map   |
+| MutableStringArray    | yes     | string  | array |
+| MutableStringList     | yes     | string  | list  |
+| MutableStringMap      | yes     | string  | map   |
 
 ## Development
 
 ### Working example
 
-You can check it out a working example of a custom "Immutable List" inside the [example/index.php](example/index.php)
+You can check some working examples in `example` folder
+```bash
+# *ImmutableArticleList* wrapper from Article instances
+php example/articles.php
+
+# *IntMatrix* (List<List<int>>) with named constructor
+php example/int_matrix.php
+
+# *PublicationList* using an interface as typeToEnforce
+php example/interface_publications.php
+```
 
 ### Git Hooks
 
