@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\GuardException;
-use TypedArrays\Exceptions\InvalidSetupException;
 use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Scalars\ImmutableIntegerList;
 

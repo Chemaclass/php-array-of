@@ -6,7 +6,7 @@ namespace TypedArraysTest\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\InvalidSetupException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Scalars\MutableStringArray;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
@@ -36,7 +36,7 @@ final class TypedArrayTest extends TestCase
 
     public function test_invalid_scalar_enforcement_type(): void
     {
-        $this->expectException(InvalidSetupException::class);
+        $this->expectExceptionObject(GuardException::invalidEnforceType('array'));
 
         new class() extends AbstractTypedArray {
             protected function typeToEnforce(): string
@@ -48,12 +48,12 @@ final class TypedArrayTest extends TestCase
 
     public function test_invalid_class_enforcement_type(): void
     {
-        $this->expectException(InvalidSetupException::class);
+        $this->expectExceptionObject(GuardException::invalidEnforceType('InvalidClassName'));
 
         new class([]) extends AbstractTypedArray {
             protected function typeToEnforce(): string
             {
-                return 'InvalidClassName' . md5((string) time());
+                return 'InvalidClassName';
             }
         };
     }

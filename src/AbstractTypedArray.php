@@ -6,7 +6,6 @@ namespace TypedArrays;
 
 use ArrayObject;
 use TypedArrays\Exceptions\GuardException;
-use TypedArrays\Exceptions\InvalidSetupException;
 use TypedArrays\Exceptions\InvalidTypeException;
 
 abstract class AbstractTypedArray extends ArrayObject
@@ -46,7 +45,6 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws InvalidSetupException
      * @throws InvalidTypeException
      * @throws GuardException
      */
@@ -92,17 +90,17 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws InvalidTypeException
+     * @throws GuardException
      */
     private function guardChildCollectionType(): void
     {
         if (!in_array($this->collectionType(), self::POSSIBLE_COLLECTION_TYPES)) {
-            throw InvalidSetupException::forCollectionType($this->collectionType());
+            throw GuardException::invalidCollectionType($this->collectionType());
         }
     }
 
     /**
-     * @throws InvalidSetupException
+     * @throws GuardException
      */
     private function guardChildTypeToEnforce(): void
     {
@@ -110,7 +108,7 @@ abstract class AbstractTypedArray extends ArrayObject
             !$this->checkForValidClass()
             && !$this->checkForScalar()
         ) {
-            throw InvalidSetupException::forEnforceType($this->typeToEnforce());
+            throw GuardException::invalidEnforceType($this->typeToEnforce());
         }
     }
 
@@ -130,11 +128,15 @@ abstract class AbstractTypedArray extends ArrayObject
      */
     private function guardInstanceTypeToEnforce(array $input): void
     {
-        array_map(function ($item): void {
+        foreach ($input as $item) {
             if (!$this->checkType($item)) {
-                throw InvalidTypeException::onInstantiate(static::class, static::getType($item), $this->typeToEnforce());
+                throw InvalidTypeException::onInstantiate(
+                    static::class,
+                    static::getType($item),
+                    $this->typeToEnforce()
+                );
             }
-        }, $input);
+        }
     }
 
     /**
@@ -236,7 +238,11 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardOffsetSetType($value): void
     {
         if (!$this->checkType($value)) {
-            throw InvalidTypeException::onAdd(static::class, static::getType($value), $this->typeToEnforce());
+            throw InvalidTypeException::onAdd(
+                static::class,
+                static::getType($value),
+                $this->typeToEnforce()
+            );
         }
     }
 }
