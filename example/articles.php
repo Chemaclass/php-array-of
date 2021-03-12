@@ -45,6 +45,11 @@ final class ImmutableArticleList extends AbstractTypedArray
         return false;
     }
 
+    protected function isNullAllowed(): bool
+    {
+        return true;
+    }
+
     protected function collectionType(): string
     {
         return self::COLLECTION_TYPE_LIST;
@@ -54,16 +59,18 @@ final class ImmutableArticleList extends AbstractTypedArray
 function renderArticles(ImmutableArticleList $articles): void
 {
     foreach ($articles as $article) {
-        echo $article . PHP_EOL;
+        echo($article ?? 'NULL') . PHP_EOL;
     }
 }
 
 $articles = new ImmutableArticleList([
     new Article(1, 'article-1'),
     new Article(2, 'article-2'),
+    null,
+    new Article(4, 'article-4'),
 ]);
 
 renderArticles($articles);
 
 //The list is immutable, this will thrown an exception!
-//$articles[] = new Article(3, 'article-3');
+//$articles[] = new Article(5, 'article-5');
