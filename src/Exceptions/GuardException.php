@@ -17,4 +17,9 @@ final class GuardException extends Exception
     {
         return new self('This TypedArray object is a map and must have keys.');
     }
+
+    public static function immutableCannotMutate(): self
+    {
+        return new self('This TypedArray object is immutable.');
+    }
 }

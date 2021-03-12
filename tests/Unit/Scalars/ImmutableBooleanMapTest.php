@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\GuardException;
-use TypedArrays\Exceptions\ImmutabilityException;
 use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Scalars\ImmutableBooleanMap;
 
@@ -60,8 +59,7 @@ final class ImmutableBooleanMapTest extends TestCase
     {
         $test = new ImmutableBooleanMap(['key' => true]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test['invalid'] = false;
     }
@@ -70,8 +68,7 @@ final class ImmutableBooleanMapTest extends TestCase
     {
         $test = new ImmutableBooleanMap(['key' => false]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test['key']);
     }

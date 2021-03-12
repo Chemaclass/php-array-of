@@ -6,7 +6,6 @@ namespace TypedArrays;
 
 use ArrayObject;
 use TypedArrays\Exceptions\GuardException;
-use TypedArrays\Exceptions\ImmutabilityException;
 use TypedArrays\Exceptions\InvalidSetupException;
 use TypedArrays\Exceptions\InvalidTypeException;
 
@@ -68,7 +67,6 @@ abstract class AbstractTypedArray extends ArrayObject
      * @param mixed $value
      *
      * @throws InvalidTypeException
-     * @throws ImmutabilityException
      * @throws GuardException
      */
     public function offsetSet($key, $value): void
@@ -84,7 +82,7 @@ abstract class AbstractTypedArray extends ArrayObject
     /**
      * @param mixed $key
      *
-     * @throws ImmutabilityException
+     * @throws GuardException
      */
     public function offsetUnset($key): void
     {
@@ -190,12 +188,12 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws ImmutabilityException
+     * @throws GuardException
      */
     private function guardMutability(): void
     {
         if (!$this->isMutable()) {
-            throw new ImmutabilityException();
+            throw GuardException::immutableCannotMutate();
         }
     }
 
