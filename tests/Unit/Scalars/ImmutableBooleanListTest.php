@@ -8,9 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
 use TypedArrays\Scalars\ImmutableBooleanList;
 
 final class ImmutableBooleanListTest extends TestCase
@@ -60,8 +59,7 @@ final class ImmutableBooleanListTest extends TestCase
     {
         $test = new ImmutableBooleanList([true]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test[] = false;
     }
@@ -70,15 +68,14 @@ final class ImmutableBooleanListTest extends TestCase
     {
         $test = new ImmutableBooleanList([false]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test[0]);
     }
 
     public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         new ImmutableBooleanList(['invalid' => false]);
     }

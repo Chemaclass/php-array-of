@@ -8,7 +8,7 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Scalars\ImmutableStringArray;
 
@@ -59,8 +59,7 @@ final class ImmutableStringArrayTest extends TestCase
     {
         $test = new ImmutableStringArray(['test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test[] = 'invalid';
     }
@@ -69,8 +68,7 @@ final class ImmutableStringArrayTest extends TestCase
     {
         $test = new ImmutableStringArray(['test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test[0]);
     }

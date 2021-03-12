@@ -8,9 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\MapException;
 use TypedArrays\Scalars\ImmutableIntegerMap;
 
 final class ImmutableIntegerMapTest extends TestCase
@@ -60,8 +59,7 @@ final class ImmutableIntegerMapTest extends TestCase
     {
         $test = new ImmutableIntegerMap(['key' => 1337]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test['invalid'] = 46;
     }
@@ -70,15 +68,14 @@ final class ImmutableIntegerMapTest extends TestCase
     {
         $test = new ImmutableIntegerMap(['key' => 1984]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test['key']);
     }
 
     public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
     {
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         new ImmutableIntegerMap([13]);
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TypedArraysTest\Unit;
 
 use PHPUnit\Framework\TestCase;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArraysTest\Unit\Fixtures\ImmutableSimpleObjectArray;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 
@@ -15,8 +15,7 @@ final class ImmutabilityTest extends TestCase
     {
         $test = new ImmutableSimpleObjectArray([new SimpleObject()]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test[] = new SimpleObject();
     }
@@ -25,8 +24,7 @@ final class ImmutabilityTest extends TestCase
     {
         $test = new ImmutableSimpleObjectArray([new SimpleObject()]);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test[0]);
     }

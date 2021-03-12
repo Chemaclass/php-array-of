@@ -3,10 +3,8 @@
 declare(strict_types=1);
 
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\InvalidSetupException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
-use TypedArrays\Exceptions\MapException;
 use TypedArrays\Scalars\ImmutableIntegerList;
 
 require getcwd() . '/vendor/autoload.php';
@@ -16,8 +14,7 @@ final class IntMatrix extends AbstractTypedArray
     /**
      * @throws InvalidSetupException
      * @throws InvalidTypeException
-     * @throws ListException
-     * @throws MapException
+     * @throws GuardException
      */
     public static function fromArrayMatrix(array $input = []): self
     {

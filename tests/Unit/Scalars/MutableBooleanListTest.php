@@ -8,8 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
 use TypedArrays\Scalars\MutableBooleanList;
 
 final class MutableBooleanListTest extends TestCase
@@ -89,7 +89,7 @@ final class MutableBooleanListTest extends TestCase
 
     public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         new MutableBooleanList(['invalid' => false]);
     }
@@ -105,7 +105,7 @@ final class MutableBooleanListTest extends TestCase
     {
         $test = new MutableBooleanList([true]);
 
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         $test['invalid'] = false;
     }

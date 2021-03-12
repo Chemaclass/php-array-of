@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TypedArraysTest\Unit;
 
 use PHPUnit\Framework\TestCase;
-use TypedArrays\Exceptions\MapException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArraysTest\Unit\Fixtures\MutableSimpleObjectMap;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 
@@ -13,7 +13,7 @@ final class MapTest extends TestCase
 {
     public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
     {
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         new MutableSimpleObjectMap([new SimpleObject('invalid')]);
     }
@@ -37,7 +37,7 @@ final class MapTest extends TestCase
     {
         $test = new MutableSimpleObjectMap(['valid' => new SimpleObject()]);
 
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         $test[] = new SimpleObject('invalid');
     }
