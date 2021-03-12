@@ -152,7 +152,7 @@ abstract class AbstractTypedArray extends ArrayObject
      */
     private function checkType($variable): bool
     {
-        if (is_null($variable)) {
+        if ($variable === null) {
             return $this->isNullAllowed();
         }
 
