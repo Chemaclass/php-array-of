@@ -8,9 +8,9 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\ImmutabilityException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
 use TypedArrays\Scalars\ImmutableStringList;
 
 final class ImmutableStringListTest extends TestCase
@@ -78,7 +78,7 @@ final class ImmutableStringListTest extends TestCase
 
     public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         new ImmutableStringList(['invalid' => 'test']);
     }
