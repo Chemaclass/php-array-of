@@ -34,14 +34,19 @@ abstract class AbstractTypedArray extends ArrayObject
 
     abstract protected function typeToEnforce(): string;
 
+    protected function collectionType(): string
+    {
+        return self::COLLECTION_TYPE_ARRAY;
+    }
+
     protected function isMutable(): bool
     {
         return true;
     }
 
-    protected function collectionType(): string
+    protected function isNullAllowed(): bool
     {
-        return self::COLLECTION_TYPE_ARRAY;
+        return false;
     }
 
     /**
@@ -144,6 +149,10 @@ abstract class AbstractTypedArray extends ArrayObject
      */
     private function checkType($variable): bool
     {
+        if ($variable === null) {
+            return $this->isNullAllowed();
+        }
+
         if (is_object($variable)) {
             return get_class($variable) === $this->typeToEnforce()
                 || is_subclass_of($variable, $this->typeToEnforce());

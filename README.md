@@ -45,14 +45,19 @@ final class ImmutableObjectList extends TypedArrays\AbstractTypedArray
         return Object::class;
     }
 
+    protected function collectionType(): string
+    {
+        return self::COLLECTION_TYPE_LIST;
+    }
+
     protected function isMutable(): bool
     {
         return false;
     }
 
-    protected function collectionType(): string
+    protected function isNullAllowed(): bool
     {
-        return self::COLLECTION_TYPE_LIST;
+        return false;
     }
 }
 ```
@@ -108,9 +113,21 @@ protected function collectionType(): string
 
 A mutable collection can be changed after it has been created, an immutable cannot. By default, the collections are mutable.
 
-You can specify if your collection is mutable or not by overriding this function in your domain:
+You can specify the collection is mutable or not by overriding this function in your domain:
 ```php
 protected function isMutable(): bool
+{
+    return false;
+}
+```
+
+## Nullability
+
+A collection can allow `null` items or not. By default, the collections cannot allow `null`s.
+
+You can specify the collection allows nullable items or not by overriding this function in your domain:
+```php
+protected function isNullAllowed(): bool
 {
     return false;
 }
@@ -153,14 +170,17 @@ If you only need a string map, or a list of integers, this library already conta
 
 You can check some working examples in `example` folder
 ```bash
-# *ImmutableArticleList* wrapper from Article instances
+# The `ImmutableArticleList` is a list of Article instances
 php example/articles.php
 
-# *IntMatrix* (List<List<int>>) with named constructor
+# The `IntMatrix` is a list of integer lists (List<List<int>>)
 php example/int_matrix.php
 
-# *PublicationList* using an interface as typeToEnforce
+# The `PublicationList` uses an interface as typeToEnforce()
 php example/interface_publications.php
+
+# The `MutableTranslationMap` is a map of string and nullables
+php example/translations.php
 ```
 
 ### Git Hooks

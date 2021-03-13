@@ -63,7 +63,7 @@ $articles = new ImmutableArticleList([
     new Article(2, 'article-2'),
 ]);
 
-renderArticles($articles);
+renderTranslations($articles);
 
 //The list is immutable, this will thrown an exception!
 //$articles[] = new Article(3, 'article-3');

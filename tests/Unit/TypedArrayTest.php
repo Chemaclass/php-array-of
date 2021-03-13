@@ -7,6 +7,7 @@ namespace TypedArraysTest\Unit;
 use PHPUnit\Framework\TestCase;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\GuardException;
+use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Scalars\MutableStringArray;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
@@ -58,6 +59,23 @@ final class TypedArrayTest extends TestCase
         };
     }
 
+    public function test_invalid_class_collection_type(): void
+    {
+        $this->expectExceptionObject(GuardException::invalidCollectionType('InvalidCollectionType'));
+
+        new class([]) extends AbstractTypedArray {
+            protected function typeToEnforce(): string
+            {
+                return self::SCALAR_STRING;
+            }
+
+            protected function collectionType(): string
+            {
+                return 'InvalidCollectionType';
+            }
+        };
+    }
+
     public function test_valid_input_types(): void
     {
         $scalars = new MutableStringArray(['test', 'test-again']);
@@ -77,5 +95,11 @@ final class TypedArrayTest extends TestCase
         self::assertFalse(isset($test[100]));
 
         self::assertCount(2, $test);
+    }
+
+    public function test_null_not_allow_in_array(): void
+    {
+        $this->expectExceptionObject(InvalidTypeException::onInstantiate(MutableStringArray::class, 'NULL', 'string'));
+        new MutableStringArray([null, 'test2']);
     }
 }
