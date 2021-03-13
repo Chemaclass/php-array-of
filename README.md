@@ -57,7 +57,7 @@ final class ImmutableObjectList extends TypedArrays\AbstractTypedArray
 
     protected function isNullAllowed(): bool
     {
-        return true;
+        return false;
     }
 }
 ```
@@ -170,7 +170,7 @@ If you only need a string map, or a list of integers, this library already conta
 
 You can check some working examples in `example` folder
 ```bash
-# The `ImmutableArticleList` is a wrapper of Article instances
+# The `ImmutableArticleList` is a list of Article instances
 php example/articles.php
 
 # The `IntMatrix` is a list of integer lists (List<List<int>>)
@@ -178,6 +178,9 @@ php example/int_matrix.php
 
 # The `PublicationList` uses an interface as typeToEnforce()
 php example/interface_publications.php
+
+# The `MutableTranslationMap` is a map of string and nullables
+php example/translations.php
 ```
 
 ### Git Hooks

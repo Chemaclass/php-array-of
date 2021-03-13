@@ -13,6 +13,11 @@ final class NullableSimpleObjectArray extends AbstractTypedArray
         return SimpleObject::class;
     }
 
+    protected function isMutable(): bool
+    {
+        return true;
+    }
+
     protected function isNullAllowed(): bool
     {
         return true;
