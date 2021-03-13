@@ -8,8 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\MapException;
 use TypedArrays\Scalars\MutableFloatMap;
 
 final class MutableFloatMapTest extends TestCase
@@ -89,7 +89,7 @@ final class MutableFloatMapTest extends TestCase
 
     public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
     {
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         new MutableFloatMap([1.3]);
     }
@@ -112,7 +112,7 @@ final class MutableFloatMapTest extends TestCase
     {
         $test = new MutableFloatMap(['valid' => 4.1]);
 
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         $test[] = 4.2;
     }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace TypedArraysTest\Unit;
 
 use PHPUnit\Framework\TestCase;
-use TypedArrays\Exceptions\ListException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArraysTest\Unit\Fixtures\MutableSimpleObjectList;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
 
@@ -13,7 +13,7 @@ final class ListTest extends TestCase
 {
     public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         new MutableSimpleObjectList(['invalid' => new SimpleObject()]);
     }
@@ -31,7 +31,7 @@ final class ListTest extends TestCase
     {
         $test = new MutableSimpleObjectList([new SimpleObject()]);
 
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         $test['invalid'] = new SimpleObject();
     }

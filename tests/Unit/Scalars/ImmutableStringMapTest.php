@@ -8,9 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\MapException;
 use TypedArrays\Scalars\ImmutableStringMap;
 
 final class ImmutableStringMapTest extends TestCase
@@ -60,8 +59,7 @@ final class ImmutableStringMapTest extends TestCase
     {
         $test = new ImmutableStringMap(['key' => 'test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test['invalid'] = 'invalid';
     }
@@ -70,15 +68,14 @@ final class ImmutableStringMapTest extends TestCase
     {
         $test = new ImmutableStringMap(['key' => 'test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test['key']);
     }
 
     public function test_map_constructor_throws_an_exception_when_keys_are_not_specified(): void
     {
-        $this->expectExceptionObject(MapException::keysRequired());
+        $this->expectExceptionObject(GuardException::keysRequiredInMap());
 
         new ImmutableStringMap(['invalid']);
     }

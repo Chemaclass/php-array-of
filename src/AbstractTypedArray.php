@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace TypedArrays;
 
 use ArrayObject;
-use TypedArrays\Exceptions\ImmutabilityException;
-use TypedArrays\Exceptions\InvalidSetupException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
-use TypedArrays\Exceptions\MapException;
 
 abstract class AbstractTypedArray extends ArrayObject
 {
@@ -53,10 +50,8 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws InvalidSetupException
      * @throws InvalidTypeException
-     * @throws ListException
-     * @throws MapException
+     * @throws GuardException
      */
     public function __construct(array $input = [])
     {
@@ -75,9 +70,7 @@ abstract class AbstractTypedArray extends ArrayObject
      * @param mixed $value
      *
      * @throws InvalidTypeException
-     * @throws ImmutabilityException
-     * @throws ListException
-     * @throws MapException
+     * @throws GuardException
      */
     public function offsetSet($key, $value): void
     {
@@ -92,7 +85,7 @@ abstract class AbstractTypedArray extends ArrayObject
     /**
      * @param mixed $key
      *
-     * @throws ImmutabilityException
+     * @throws GuardException
      */
     public function offsetUnset($key): void
     {
@@ -102,17 +95,17 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws InvalidTypeException
+     * @throws GuardException
      */
     private function guardChildCollectionType(): void
     {
         if (!in_array($this->collectionType(), self::POSSIBLE_COLLECTION_TYPES)) {
-            throw InvalidSetupException::forCollectionType($this->collectionType());
+            throw GuardException::invalidCollectionType($this->collectionType());
         }
     }
 
     /**
-     * @throws InvalidSetupException
+     * @throws GuardException
      */
     private function guardChildTypeToEnforce(): void
     {
@@ -120,7 +113,7 @@ abstract class AbstractTypedArray extends ArrayObject
             !$this->checkForValidClass()
             && !$this->checkForScalar()
         ) {
-            throw InvalidSetupException::forEnforceType($this->typeToEnforce());
+            throw GuardException::invalidEnforceType($this->typeToEnforce());
         }
     }
 
@@ -140,11 +133,15 @@ abstract class AbstractTypedArray extends ArrayObject
      */
     private function guardInstanceTypeToEnforce(array $input): void
     {
-        array_map(function ($item): void {
+        foreach ($input as $item) {
             if (!$this->checkType($item)) {
-                throw InvalidTypeException::onInstantiate(static::class, static::getType($item), $this->typeToEnforce());
+                throw InvalidTypeException::onInstantiate(
+                    static::class,
+                    static::getType($item),
+                    $this->typeToEnforce()
+                );
             }
-        }, $input);
+        }
     }
 
     /**
@@ -175,7 +172,7 @@ abstract class AbstractTypedArray extends ArrayObject
     }
 
     /**
-     * @throws ListException
+     * @throws GuardException
      */
     private function guardInstanceList(array $input): void
     {
@@ -183,12 +180,12 @@ abstract class AbstractTypedArray extends ArrayObject
             $this->collectionType() === self::COLLECTION_TYPE_LIST
             && array_values($input) !== $input
         ) {
-            throw ListException::keysNotAllowed();
+            throw GuardException::keysNotAllowedInList();
         }
     }
 
     /**
-     * @throws MapException
+     * @throws GuardException
      */
     private function guardInstanceMap(array $input): void
     {
@@ -197,24 +194,24 @@ abstract class AbstractTypedArray extends ArrayObject
             && $this->collectionType() === self::COLLECTION_TYPE_MAP
             && array_values($input) === $input
         ) {
-            throw MapException::keysRequired();
+            throw GuardException::keysRequiredInMap();
         }
     }
 
     /**
-     * @throws ImmutabilityException
+     * @throws GuardException
      */
     private function guardMutability(): void
     {
         if (!$this->isMutable()) {
-            throw new ImmutabilityException();
+            throw GuardException::immutableCannotMutate();
         }
     }
 
     /**
      * @param mixed $key
      *
-     * @throws ListException
+     * @throws GuardException
      */
     private function guardOffsetSetList($key): void
     {
@@ -223,14 +220,14 @@ abstract class AbstractTypedArray extends ArrayObject
             && $this->collectionType() === self::COLLECTION_TYPE_LIST
             && !isset($this[$key])
         ) {
-            throw ListException::keysNotAllowed();
+            throw GuardException::keysNotAllowedInList();
         }
     }
 
     /**
      * @param mixed $key
      *
-     * @throws MapException
+     * @throws GuardException
      */
     private function guardOffsetSetMap($key): void
     {
@@ -238,7 +235,7 @@ abstract class AbstractTypedArray extends ArrayObject
             !isset($key)
             && $this->collectionType() === self::COLLECTION_TYPE_MAP
         ) {
-            throw MapException::keysRequired();
+            throw GuardException::keysRequiredInMap();
         }
     }
 
@@ -250,7 +247,11 @@ abstract class AbstractTypedArray extends ArrayObject
     private function guardOffsetSetType($value): void
     {
         if (!$this->checkType($value)) {
-            throw InvalidTypeException::onAdd(static::class, static::getType($value), $this->typeToEnforce());
+            throw InvalidTypeException::onAdd(
+                static::class,
+                static::getType($value),
+                $this->typeToEnforce()
+            );
         }
     }
 }

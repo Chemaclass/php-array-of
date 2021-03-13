@@ -8,9 +8,8 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use TypedArrays\AbstractTypedArray;
-use TypedArrays\Exceptions\ImmutabilityException;
+use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Exceptions\ListException;
 use TypedArrays\Scalars\ImmutableStringList;
 
 final class ImmutableStringListTest extends TestCase
@@ -60,8 +59,7 @@ final class ImmutableStringListTest extends TestCase
     {
         $test = new ImmutableStringList(['test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         $test[] = 'invalid';
     }
@@ -70,15 +68,14 @@ final class ImmutableStringListTest extends TestCase
     {
         $test = new ImmutableStringList(['test']);
 
-        $this->expectException(ImmutabilityException::class);
-        $this->expectExceptionMessage('This TypedArray object is immutable.');
+        $this->expectExceptionObject(GuardException::immutableCannotMutate());
 
         unset($test[0]);
     }
 
     public function test_list_constructor_throws_an_exception_when_keys_are_specified(): void
     {
-        $this->expectExceptionObject(ListException::keysNotAllowed());
+        $this->expectExceptionObject(GuardException::keysNotAllowedInList());
 
         new ImmutableStringList(['invalid' => 'test']);
     }
