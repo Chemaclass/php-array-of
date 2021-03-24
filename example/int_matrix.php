@@ -7,7 +7,7 @@ use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
 use TypedArrays\Scalars\ImmutableIntegerList;
 
-require getcwd() . '/vendor/autoload.php';
+require  dirname(__DIR__) . '/vendor/autoload.php';
 
 final class IntMatrix extends AbstractTypedArray
 {

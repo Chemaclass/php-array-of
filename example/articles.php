@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use TypedArrays\AbstractTypedArray;
 
-require getcwd() . '/vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 
 final class Article
 {
@@ -63,7 +63,7 @@ $articles = new ImmutableArticleList([
     new Article(2, 'article-2'),
 ]);
 
-renderTranslations($articles);
+renderArticles($articles);
 
 //The list is immutable, this will thrown an exception!
 //$articles[] = new Article(3, 'article-3');

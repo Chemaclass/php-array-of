@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use TypedArrays\AbstractTypedArray;
 
-require getcwd() . '/vendor/autoload.php';
+require  dirname(__DIR__) . '/vendor/autoload.php';
 
 interface InterfacePublication
 {
