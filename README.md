@@ -1,4 +1,7 @@
 <p align="center">
+  <a href="https://github.com/chemaclass/typed-arrays/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT Software License">
+  </a>
   <a href="https://github.com/chemaclass/typed-arrays/actions">
     <img src="https://github.com/chemaclass/typed-arrays/workflows/CI/badge.svg" alt="GitHub Build Status">
   </a>
