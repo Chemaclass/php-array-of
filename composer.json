@@ -6,6 +6,20 @@
   "require": {
     "php": ">=7.4"
   },
+  "authors": [
+    {
+      "name": "Jose Maria Valera Reales",
+      "email": "chemaclass@outlook.es"
+    },
+    {
+      "name": "Jesus Valera Reales",
+      "email": "jesus1902@outlook.com"
+    },
+    {
+      "name": "Antonio Gonzalez Gea",
+      "email": "katarn@katarn.es"
+    }
+  ],
   "require-dev": {
     "phpunit/phpunit": "^9.3",
     "vimeo/psalm": "^4.6",
