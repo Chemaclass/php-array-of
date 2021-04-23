@@ -1,7 +1,4 @@
 <p align="center">
-  <a href="https://github.com/chemaclass/typed-arrays/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="MIT Software License">
-  </a>
   <a href="https://github.com/chemaclass/typed-arrays/actions">
     <img src="https://github.com/chemaclass/typed-arrays/workflows/CI/badge.svg" alt="GitHub Build Status">
   </a>
@@ -13,6 +10,9 @@
   </a>
   <a href="https://shepherd.dev/github/chemaclass/typed-arrays">
     <img src="https://shepherd.dev/github/chemaclass/typed-arrays/coverage.svg" alt="Psalm Type-coverage Status">
+  </a>
+  <a href="https://github.com/Chemaclass/typed-arrays/blob/master/LICENSE">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT Software License">
   </a>
 </p>
 
