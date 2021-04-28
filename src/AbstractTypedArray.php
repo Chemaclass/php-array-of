@@ -56,9 +56,9 @@ abstract class AbstractTypedArray extends ArrayObject
     public function __construct(array $input = [])
     {
         $this->guardChildCollectionType();
-        $this->guardChildTypeToEnforce();
+        $this->guardChildEnforceType();
 
-        $this->guardInstanceTypeToEnforce($input);
+        $this->guardInstanceEnforceType($input);
         $this->guardInstanceList($input);
         $this->guardInstanceMap($input);
 
@@ -107,7 +107,7 @@ abstract class AbstractTypedArray extends ArrayObject
     /**
      * @throws GuardException
      */
-    private function guardChildTypeToEnforce(): void
+    private function guardChildEnforceType(): void
     {
         if (
             !$this->checkForValidClass()
@@ -131,7 +131,7 @@ abstract class AbstractTypedArray extends ArrayObject
     /**
      * @throws InvalidTypeException
      */
-    private function guardInstanceTypeToEnforce(array $input): void
+    private function guardInstanceEnforceType(array $input): void
     {
         foreach ($input as $item) {
             if (!$this->checkType($item)) {
