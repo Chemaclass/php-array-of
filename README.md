@@ -136,37 +136,6 @@ protected function isNullAllowed(): bool
 }
 ```
 
-## Predefined Scalars
-
-If you only need a string map, or a list of integers, this library already contains all possible scalar combinations for:
-
-| Class                 | Mutable | Scalar  | Type  |
-|-----------------------|---------|---------|-------|
-| ImmutableBooleanArray | no      | boolean | array |
-| ImmutableBooleanList  | no      | boolean | list  |
-| ImmutableBooleanMap   | no      | boolean | map   |
-| ImmutableFloatArray   | no      | float   | array |
-| ImmutableFloatList    | no      | float   | list  |
-| ImmutableFloatMap     | no      | float   | map   |
-| ImmutableIntegerArray | no      | integer | array |
-| ImmutableIntegerList  | no      | integer | list  |
-| ImmutableIntegerMap   | no      | integer | map   |
-| ImmutableStringArray  | no      | string  | array |
-| ImmutableStringList   | no      | string  | list  |
-| ImmutableStringMap    | no      | string  | map   |
-| MutableBooleanArray   | yes     | boolean | array |
-| MutableBooleanList    | yes     | boolean | list  |
-| MutableBooleanMap     | yes     | boolean | map   |
-| MutableFloatArray     | yes     | float   | array |
-| MutableFloatList      | yes     | float   | list  |
-| MutableFloatMap       | yes     | float   | map   |
-| MutableIntegerArray   | yes     | integer | array |
-| MutableIntegerList    | yes     | integer | list  |
-| MutableIntegerMap     | yes     | integer | map   |
-| MutableStringArray    | yes     | string  | array |
-| MutableStringList     | yes     | string  | list  |
-| MutableStringMap      | yes     | string  | map   |
-
 ## Development
 
 ### Working example
