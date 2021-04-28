@@ -8,12 +8,12 @@ use TypedArrays\AbstractTypedArray;
 
 final class NonNullableSimpleObjectArray extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return SimpleObject::class;
     }
 
-    protected function isNullAllowed(): bool
+    protected function isNullable(): bool
     {
         return false;
     }

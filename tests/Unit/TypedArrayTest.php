@@ -8,15 +8,15 @@ use PHPUnit\Framework\TestCase;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArrays\Scalars\MutableStringArray;
 use TypedArraysTest\Unit\Fixtures\SimpleObject;
+use TypedArraysTest\Unit\Fixtures\StringArray;
 use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
 
 final class TypedArrayTest extends TestCase
 {
     public function test_valid_enforcement_types(): void
     {
-        $validScalar = new MutableStringArray();
+        $validScalar = new StringArray();
         self::assertInstanceOf(AbstractTypedArray::class, $validScalar);
 
         $validClass = new TypedArraySimpleObjects();
@@ -30,7 +30,7 @@ final class TypedArrayTest extends TestCase
             'key2' => 'value2',
         ];
 
-        $test = (array) new MutableStringArray($input);
+        $test = (array) new StringArray($input);
 
         self::assertSame(['key1', 'key2'], array_keys($test));
     }
@@ -40,7 +40,7 @@ final class TypedArrayTest extends TestCase
         $this->expectExceptionObject(GuardException::invalidEnforceType('array'));
 
         new class() extends AbstractTypedArray {
-            protected function typeToEnforce(): string
+            protected function enforceType(): string
             {
                 return 'array';
             }
@@ -52,7 +52,7 @@ final class TypedArrayTest extends TestCase
         $this->expectExceptionObject(GuardException::invalidEnforceType('InvalidClassName'));
 
         new class([]) extends AbstractTypedArray {
-            protected function typeToEnforce(): string
+            protected function enforceType(): string
             {
                 return 'InvalidClassName';
             }
@@ -64,7 +64,7 @@ final class TypedArrayTest extends TestCase
         $this->expectExceptionObject(GuardException::invalidCollectionType('InvalidCollectionType'));
 
         new class([]) extends AbstractTypedArray {
-            protected function typeToEnforce(): string
+            protected function enforceType(): string
             {
                 return self::SCALAR_STRING;
             }
@@ -78,7 +78,7 @@ final class TypedArrayTest extends TestCase
 
     public function test_valid_input_types(): void
     {
-        $scalars = new MutableStringArray(['test', 'test-again']);
+        $scalars = new StringArray(['test', 'test-again']);
         self::assertInstanceOf(AbstractTypedArray::class, $scalars);
 
         $classes = new TypedArraySimpleObjects([new SimpleObject(), new SimpleObject()]);
@@ -87,7 +87,7 @@ final class TypedArrayTest extends TestCase
 
     public function test_can_use_as_array(): void
     {
-        $test = new MutableStringArray(['test1', 'test2']);
+        $test = new StringArray(['test1', 'test2']);
 
         self::assertSame('test1', $test[0]);
         self::assertSame('test2', $test[1]);
@@ -99,7 +99,7 @@ final class TypedArrayTest extends TestCase
 
     public function test_null_not_allow_in_array(): void
     {
-        $this->expectExceptionObject(InvalidTypeException::onInstantiate(MutableStringArray::class, 'NULL', 'string'));
-        new MutableStringArray([null, 'test2']);
+        $this->expectExceptionObject(InvalidTypeException::onInstantiate(StringArray::class, 'NULL', 'string'));
+        new StringArray([null, 'test2']);
     }
 }

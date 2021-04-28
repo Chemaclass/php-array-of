@@ -43,7 +43,7 @@ This is an example of a class you would create in order to implement collections
 ```php
 final class ImmutableObjectList extends TypedArrays\AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return Object::class;
     }
@@ -58,24 +58,24 @@ final class ImmutableObjectList extends TypedArrays\AbstractTypedArray
         return false;
     }
 
-    protected function isNullAllowed(): bool
+    protected function isNullable(): bool
     {
         return false;
     }
 }
 ```
 
-## Type to Enforce
+## Enforce Type
 
 You must implement this method. Here you define what kind of object this collection will handle:
 ```php
-protected function typeToEnforce(): string
+protected function enforceType(): string
 {
     return Object::class;
 }
 ```
 
-## Collection Types
+## Collection Type
 
 There are different kinds of collections.
 In this library you can find up to three different types: `array`, `map` and `list`.
@@ -112,7 +112,7 @@ protected function collectionType(): string
 - The user of this interface has precise control over where in the list each element is inserted. 
 - The user can access elements by their integer index (position in the list).
 
-## Immutability
+## Mutability
 
 A mutable collection can be changed after it has been created, an immutable cannot. By default, the collections are mutable.
 
@@ -130,7 +130,7 @@ A collection can allow `null` items or not. By default, the collections cannot a
 
 You can specify the collection allows nullable items or not by overriding this function in your domain:
 ```php
-protected function isNullAllowed(): bool
+protected function isNullable(): bool
 {
     return false;
 }
@@ -148,7 +148,7 @@ php example/articles.php
 # The `IntMatrix` is a list of integer lists (List<List<int>>)
 php example/int_matrix.php
 
-# The `PublicationList` uses an interface as typeToEnforce()
+# The `PublicationList` uses an interface as enforceType()
 php example/interface_publications.php
 
 # The `MutableTranslationMap` is a map of string and nullables

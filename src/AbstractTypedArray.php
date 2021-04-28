@@ -32,7 +32,7 @@ abstract class AbstractTypedArray extends ArrayObject
         self::COLLECTION_TYPE_MAP,
     ];
 
-    abstract protected function typeToEnforce(): string;
+    abstract protected function enforceType(): string;
 
     protected function collectionType(): string
     {
@@ -44,7 +44,7 @@ abstract class AbstractTypedArray extends ArrayObject
         return true;
     }
 
-    protected function isNullAllowed(): bool
+    protected function isNullable(): bool
     {
         return false;
     }
@@ -113,19 +113,19 @@ abstract class AbstractTypedArray extends ArrayObject
             !$this->checkForValidClass()
             && !$this->checkForScalar()
         ) {
-            throw GuardException::invalidEnforceType($this->typeToEnforce());
+            throw GuardException::invalidEnforceType($this->enforceType());
         }
     }
 
     private function checkForValidClass(): bool
     {
-        return class_exists($this->typeToEnforce())
-            || interface_exists($this->typeToEnforce());
+        return class_exists($this->enforceType())
+            || interface_exists($this->enforceType());
     }
 
     private function checkForScalar(): bool
     {
-        return in_array($this->typeToEnforce(), self::POSSIBLE_SCALARS);
+        return in_array($this->enforceType(), self::POSSIBLE_SCALARS);
     }
 
     /**
@@ -138,7 +138,7 @@ abstract class AbstractTypedArray extends ArrayObject
                 throw InvalidTypeException::onInstantiate(
                     static::class,
                     static::getType($item),
-                    $this->typeToEnforce()
+                    $this->enforceType()
                 );
             }
         }
@@ -150,15 +150,15 @@ abstract class AbstractTypedArray extends ArrayObject
     private function checkType($variable): bool
     {
         if ($variable === null) {
-            return $this->isNullAllowed();
+            return $this->isNullable();
         }
 
         if (is_object($variable)) {
-            return get_class($variable) === $this->typeToEnforce()
-                || is_subclass_of($variable, $this->typeToEnforce());
+            return get_class($variable) === $this->enforceType()
+                || is_subclass_of($variable, $this->enforceType());
         }
 
-        return static::getType($variable) === $this->typeToEnforce();
+        return static::getType($variable) === $this->enforceType();
     }
 
     /**
@@ -250,7 +250,7 @@ abstract class AbstractTypedArray extends ArrayObject
             throw InvalidTypeException::onAdd(
                 static::class,
                 static::getType($value),
-                $this->typeToEnforce()
+                $this->enforceType()
             );
         }
     }

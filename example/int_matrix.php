@@ -24,7 +24,7 @@ final class IntMatrix extends AbstractTypedArray
         ));
     }
 
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return ImmutableIntegerList::class;
     }

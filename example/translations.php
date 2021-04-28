@@ -8,7 +8,7 @@ require  dirname(__DIR__) . '/vendor/autoload.php';
 
 final class MutableTranslationMap extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return self::SCALAR_STRING;
     }
@@ -18,7 +18,7 @@ final class MutableTranslationMap extends AbstractTypedArray
         return self::COLLECTION_TYPE_MAP;
     }
 
-    protected function isNullAllowed(): bool
+    protected function isNullable(): bool
     {
         return true;
     }

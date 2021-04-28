@@ -8,7 +8,7 @@ use TypedArrays\AbstractTypedArray;
 
 final class MutableSimpleObjectList extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return SimpleObject::class;
     }

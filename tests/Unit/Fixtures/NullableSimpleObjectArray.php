@@ -8,7 +8,7 @@ use TypedArrays\AbstractTypedArray;
 
 final class NullableSimpleObjectArray extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return SimpleObject::class;
     }
@@ -18,7 +18,7 @@ final class NullableSimpleObjectArray extends AbstractTypedArray
         return true;
     }
 
-    protected function isNullAllowed(): bool
+    protected function isNullable(): bool
     {
         return true;
     }

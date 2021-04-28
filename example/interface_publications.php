@@ -61,7 +61,7 @@ final class YouTubeVideo implements InterfacePublication
 
 final class PublicationList extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return InterfacePublication::class;
     }

@@ -6,10 +6,10 @@ namespace TypedArraysTest\Unit\Fixtures;
 
 use TypedArrays\AbstractTypedArray;
 
-final class TypedArraySimpleObjects extends AbstractTypedArray
+final class StringArray extends AbstractTypedArray
 {
     protected function enforceType(): string
     {
-        return SimpleObject::class;
+        return self::SCALAR_STRING;
     }
 }

@@ -35,7 +35,7 @@ final class Article
 
 final class ImmutableArticleList extends AbstractTypedArray
 {
-    protected function typeToEnforce(): string
+    protected function enforceType(): string
     {
         return Article::class;
     }
