@@ -16,6 +16,10 @@
   </a>
 </p>
 
+# WIP!
+
+> This branch is work in progress, its use in any type of environment is strongly discouraged. Instead use the [master releases](https://github.com/Chemaclass/typed-arrays/tree/master).
+
 # TypedArrays
 
 Generics replacement for PHP. 
