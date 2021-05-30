@@ -1,12 +1,17 @@
-<?php declare(strict_types=1);
+<?php
 
-$finder = PhpCsFixer\Finder::create()
+declare(strict_types=1);
+
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
+
+$finder = Finder::create()
     ->files()
     ->in(__DIR__ . '/example')
     ->in(__DIR__ . '/src')
     ->in(__DIR__ . '/tests');
 
-return PhpCsFixer\Config::create()
+return (new Config())
   ->setFinder($finder)
   ->setRules([
     '@PSR12' => true,
@@ -38,7 +43,7 @@ return PhpCsFixer\Config::create()
     'phpdoc_var_without_name' => true,
     'single_trait_insert_per_statement' => true,
     'single_quote' => true,
-    'trailing_comma_in_multiline_array' => true,
+    'trailing_comma_in_multiline' => true,
     'trim_array_spaces' => true,
     'void_return' => true,
     'php_unit_method_casing' => ['case' => 'snake_case'],

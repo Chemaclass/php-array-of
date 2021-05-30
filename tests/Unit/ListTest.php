@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit;
+namespace TypedArrays\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\Exceptions\GuardException;
-use TypedArraysTest\Unit\Fixtures\MutableSimpleObjectList;
-use TypedArraysTest\Unit\Fixtures\SimpleObject;
+use TypedArrays\Tests\Unit\Fixtures\MutableSimpleObjectList;
+use TypedArrays\Tests\Unit\Fixtures\SimpleObject;
 
 final class ListTest extends TestCase
 {

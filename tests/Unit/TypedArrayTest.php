@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit;
+namespace TypedArrays\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\AbstractTypedArray;
 use TypedArrays\Exceptions\GuardException;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArraysTest\Unit\Fixtures\SimpleObject;
-use TypedArraysTest\Unit\Fixtures\StringArray;
-use TypedArraysTest\Unit\Fixtures\TypedArraySimpleObjects;
+use TypedArrays\Tests\Unit\Fixtures\SimpleObject;
+use TypedArrays\Tests\Unit\Fixtures\StringArray;
+use TypedArrays\Tests\Unit\Fixtures\TypedArraySimpleObjects;
 
 final class TypedArrayTest extends TestCase
 {

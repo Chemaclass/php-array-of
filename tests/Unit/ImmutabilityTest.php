@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit;
+namespace TypedArrays\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\Exceptions\GuardException;
-use TypedArraysTest\Unit\Fixtures\ImmutableSimpleObjectArray;
-use TypedArraysTest\Unit\Fixtures\SimpleObject;
+use TypedArrays\Tests\Unit\Fixtures\ImmutableSimpleObjectArray;
+use TypedArrays\Tests\Unit\Fixtures\SimpleObject;
 
 final class ImmutabilityTest extends TestCase
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace TypedArraysTest\Unit;
+namespace TypedArrays\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use TypedArrays\Exceptions\InvalidTypeException;
-use TypedArraysTest\Unit\Fixtures\NonNullableSimpleObjectArray;
-use TypedArraysTest\Unit\Fixtures\NullableSimpleObjectArray;
-use TypedArraysTest\Unit\Fixtures\SimpleObject;
+use TypedArrays\Tests\Unit\Fixtures\NonNullableSimpleObjectArray;
+use TypedArrays\Tests\Unit\Fixtures\NullableSimpleObjectArray;
+use TypedArrays\Tests\Unit\Fixtures\SimpleObject;
 
 final class NullabilityTest extends TestCase
 {
